@@ -36,7 +36,7 @@ object WSHttp extends WSGet with WSPut with WSPost with WSDelete with WSPatch {
 }
 
 object MicroserviceAuditConnector extends AuditConnector with RunMode {
-  override lazy val auditingConfig = LoadAuditingConfig(s"$env.auditing")
+  override lazy val auditingConfig = LoadAuditingConfig(s"auditing")
 }
 
 object MicroserviceAuthConnector extends AuthConnector with ServicesConfig {
@@ -71,7 +71,7 @@ object MicroserviceAuthFilter extends AuthorisationFilter with MicroserviceFilte
 object AtedGlobal extends DefaultMicroserviceGlobal with RunMode {
   override val auditConnector = MicroserviceAuditConnector
 
-  override def microserviceMetricsConfig(implicit app: Application): Option[Configuration] = app.configuration.getConfig(s"$env.microservice.metrics")
+  override def microserviceMetricsConfig(implicit app: Application): Option[Configuration] = app.configuration.getConfig(s"microservice.metrics")
 
   override val loggingFilter = MicroserviceLoggingFilter
 
