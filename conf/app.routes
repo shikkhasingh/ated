@@ -47,6 +47,8 @@ GET   /ated/:atedRefNo/returns/full-summary                         controllers.
 
 ## subscription ##
 GET   /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.retrieveSubscriptionData(atedRefNo: String)
+#GET   /agent/:agentCode/ated/subscription-data/:atedRefno           controllers.AgentRetrieveClientSubscriptionDataController.retrieveSubscriptionData(atedRefno: String)
+
 POST  /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.updateSubscriptionData(atedRefNo: String)
 POST  /ated/:atedRefNo/registration-details/:safeId                 controllers.SubscriptionDataController.updateRegistrationDetails(atedRefNo: String, safeId: String)
 

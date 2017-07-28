@@ -38,6 +38,7 @@ trait DetailsController extends BaseController {
     }
   }
 
+
 }
 
 object DetailsController extends DetailsController {

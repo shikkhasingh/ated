@@ -28,6 +28,7 @@ trait SubscriptionDataController extends BaseController {
   def subscriptionDataService: SubscriptionDataService
 
   def retrieveSubscriptionData(accountRef: String) = Action.async { implicit request =>
+    println(s"______________________________________________________________________in ated - retrieveSubscriptionData")
     subscriptionDataService.retrieveSubscriptionData(accountRef) map { responseReceived =>
       responseReceived.status match {
         case OK => Ok(responseReceived.body)
@@ -70,6 +71,13 @@ trait SubscriptionDataController extends BaseController {
 }
 
 object SubscriptionDataController extends SubscriptionDataController {
+
+  val subscriptionDataService: SubscriptionDataService = SubscriptionDataService
+
+}
+
+
+object AgentRetrieveClientSubscriptionDataController extends SubscriptionDataController {
 
   val subscriptionDataService: SubscriptionDataService = SubscriptionDataService
 

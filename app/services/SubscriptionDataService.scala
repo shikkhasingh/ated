@@ -31,6 +31,7 @@ trait SubscriptionDataService {
   def authConnector: AuthConnector
 
   def retrieveSubscriptionData(atedReferenceNo: String): Future[HttpResponse] = {
+    println(s"______________________________________________________________________in ated - service")
     etmpConnector.getSubscriptionData(atedReferenceNo)
   }
 
