@@ -40,10 +40,9 @@ trait SubscriptionDataController extends BaseController {
   }
 
   def retrieveSubscriptionDataByAgent(accountRef: String, agentCode: String) = Action.async { implicit request =>
-    println(s"______________________________________________________________________in ated - retrieveSubscriptionData - Agent")
     subscriptionDataService.retrieveSubscriptionData(accountRef) map { responseReceived =>
       responseReceived.status match {
-        case OK => println(s"++++++++++++++ ${responseReceived.body}"); Ok(responseReceived.body)
+        case OK => Ok(responseReceived.body)
         case NOT_FOUND => NotFound(responseReceived.body)
         case BAD_REQUEST => BadRequest(responseReceived.body)
         case SERVICE_UNAVAILABLE => ServiceUnavailable(responseReceived.body)
