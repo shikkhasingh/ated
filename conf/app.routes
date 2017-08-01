@@ -49,6 +49,7 @@ GET   /ated/:atedRefNo/returns/full-summary                         controllers.
 GET   /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.retrieveSubscriptionData(atedRefNo: String)
 POST  /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.updateSubscriptionData(atedRefNo: String)
 POST  /ated/:atedRefNo/registration-details/:safeId                 controllers.SubscriptionDataController.updateRegistrationDetails(atedRefNo: String, safeId: String)
+GET   /agent/:agentCode/ated/subscription-data/:atedRefno           controllers.AgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(atedRefno: String, agentCode: String)
 
 ## form-bundle  TODO: Make this more readable ##
 GET   /ated/:atedRefNo/returns/form-bundle/:formBundleNumber        controllers.FormBundleReturnsController.getFormBundleReturns(atedRefNo: String, formBundleNumber:String)

@@ -53,6 +53,18 @@ trait SubscriptionDataController extends BaseController {
     }
   }
 
+  def retrieveSubscriptionDataByAgent(accountRef: String, agentCode: String) = Action.async { implicit request =>
+    subscriptionDataService.retrieveSubscriptionData(accountRef) map { responseReceived =>
+      responseReceived.status match {
+        case OK => Ok(responseReceived.body)
+        case NOT_FOUND => NotFound(responseReceived.body)
+        case BAD_REQUEST => BadRequest(responseReceived.body)
+        case SERVICE_UNAVAILABLE => ServiceUnavailable(responseReceived.body)
+        case _ => InternalServerError(responseReceived.body)
+      }
+    }
+  }
+
   def updateRegistrationDetails(accountRef: String, safeId: String) = Action.async(parse.json) { implicit request =>
     withJsonBody[UpdateRegistrationDetailsRequest] { updatedData =>
       subscriptionDataService.updateRegistrationDetails(accountRef, safeId, updatedData) map { responseReceived =>
@@ -70,7 +82,9 @@ trait SubscriptionDataController extends BaseController {
 }
 
 object SubscriptionDataController extends SubscriptionDataController {
-
   val subscriptionDataService: SubscriptionDataService = SubscriptionDataService
+}
 
+object AgentRetrieveClientSubscriptionDataController extends SubscriptionDataController {
+  val subscriptionDataService: SubscriptionDataService = SubscriptionDataService
 }
