@@ -52,10 +52,13 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
     reset(mockSubscriptionDataService)
   }
 
-
-  "ReturnsSummaryController" must {
-    "use correct ETMP connector" in {
+  "SubscriptionDataController" must {
+    "use correct service" in {
       SubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
+      AgentRetrieveClientSubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
+    }
+
+    "use correct service for agents" in {
       AgentRetrieveClientSubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
     }
 
@@ -87,10 +90,11 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
       }
     }
 
-    "get subscription data by agent" must {
+
+    "get subscription data requested by agent" must {
       "respond with OK, for successful GET" in {
         when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponseJson))))
-        val result = TestAgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr,agentCode).apply(FakeRequest())
+        val result = TestSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr, agentCode).apply(FakeRequest())
         status(result) must be(OK)
       }
       "respond with NOT_FOUND, for unsuccessful GET" in {
@@ -114,7 +118,6 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
         status(result) must be(INTERNAL_SERVER_ERROR)
       }
     }
-
 
     "update subscription data" must {
       val addressDetails = AddressDetails("Correspondence", "line1", "line2", None, None, Some("postCode"), "GB")
