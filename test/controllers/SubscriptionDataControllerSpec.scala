@@ -34,6 +34,7 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
 
   val mockSubscriptionDataService = mock[SubscriptionDataService]
   val callingUtr = "ATED-123"
+  val agentCode = "AGENT-CODE"
   val callingSafeId = "EX0012345678909"
   val successResponseJson = Json.parse( """{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}""")
   val failureResponseJson = Json.parse( """{"reason":"Agent not found!"}""")
@@ -43,14 +44,22 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
     val subscriptionDataService: SubscriptionDataService = mockSubscriptionDataService
   }
 
+  object TestAgentRetrieveClientSubscriptionDataController extends SubscriptionDataController {
+    val subscriptionDataService: SubscriptionDataService = mockSubscriptionDataService
+  }
+
   override def beforeEach = {
     reset(mockSubscriptionDataService)
   }
 
-
-  "ReturnsSummaryController" must {
-    "use correct ETMP connector" in {
+  "SubscriptionDataController" must {
+    "use correct service" in {
       SubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
+      AgentRetrieveClientSubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
+    }
+
+    "use correct service for agents" in {
+      AgentRetrieveClientSubscriptionDataController.subscriptionDataService must be(SubscriptionDataService)
     }
 
     "get subscription data" must {
@@ -77,6 +86,35 @@ class SubscriptionDataControllerSpec extends PlaySpec with OneServerPerSuite wit
       "respond with InternalServerError, if ETMP sends some server error response" in {
         when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, Some(errorResponseJson))))
         val result = TestSubscriptionDataController.retrieveSubscriptionData(callingUtr).apply(FakeRequest())
+        status(result) must be(INTERNAL_SERVER_ERROR)
+      }
+    }
+
+
+    "get subscription data requested by agent" must {
+      "respond with OK, for successful GET" in {
+        when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponseJson))))
+        val result = TestSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr, agentCode).apply(FakeRequest())
+        status(result) must be(OK)
+      }
+      "respond with NOT_FOUND, for unsuccessful GET" in {
+        when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(NOT_FOUND, Some(failureResponseJson))))
+        val result = TestAgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr,agentCode).apply(FakeRequest())
+        status(result) must be(NOT_FOUND)
+      }
+      "respond with BAD_REQUEST, if ETMP sends BadRequest status" in {
+        when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(BAD_REQUEST, Some(errorResponseJson))))
+        val result = TestAgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr,agentCode).apply(FakeRequest())
+        status(result) must be(BAD_REQUEST)
+      }
+      "respond with SERVICE_UNAVAILABLE, if ETMP is unavailable" in {
+        when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(SERVICE_UNAVAILABLE, Some(errorResponseJson))))
+        val result = TestAgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr,agentCode).apply(FakeRequest())
+        status(result) must be(SERVICE_UNAVAILABLE)
+      }
+      "respond with InternalServerError, if ETMP sends some server error response" in {
+        when(mockSubscriptionDataService.retrieveSubscriptionData(Matchers.any())).thenReturn(Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, Some(errorResponseJson))))
+        val result = TestAgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(callingUtr,agentCode).apply(FakeRequest())
         status(result) must be(INTERNAL_SERVER_ERROR)
       }
     }
