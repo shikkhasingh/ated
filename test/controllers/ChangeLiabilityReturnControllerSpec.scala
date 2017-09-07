@@ -60,7 +60,7 @@ class ChangeLiabilityReturnControllerSpec extends PlaySpec with OneServerPerSuit
     "convertSubmittedReturnToCachedDraft" must {
       "return ChangeLiabilityReturn model, if found in cache or ETMP" in {
         lazy val changeLiabilityReturn = PropertyDetailsBuilder.getFullPropertyDetails(formBundle1)
-        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(changeLiabilityReturn)))
+        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any(), Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(changeLiabilityReturn)))
         val result = TestChangeLiabilityReturnController.convertSubmittedReturnToCachedDraft(atedRefNo, formBundle1).apply(FakeRequest())
         status(result) must be(OK)
         contentAsJson(result) must be(Json.toJson(changeLiabilityReturn))
@@ -68,7 +68,7 @@ class ChangeLiabilityReturnControllerSpec extends PlaySpec with OneServerPerSuit
 
       "return ChangeLiabilityReturn model, if NOT-found in cache or ETMP" in {
         lazy val changeLiabilityReturn = PropertyDetailsBuilder.getFullPropertyDetails(formBundle1)
-        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
+        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any(), Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
         val result = TestChangeLiabilityReturnController.convertSubmittedReturnToCachedDraft(atedRefNo, formBundle1).apply(FakeRequest())
         status(result) must be(NOT_FOUND)
         contentAsJson(result) must be(Json.parse( """{}"""))
@@ -78,16 +78,16 @@ class ChangeLiabilityReturnControllerSpec extends PlaySpec with OneServerPerSuit
     "convertPreviousSubmittedReturnToCachedDraft" must {
       "return ChangeLiabilityReturn model, if found in cache or ETMP" in {
         lazy val changeLiabilityReturn = PropertyDetailsBuilder.getFullPropertyDetails(formBundle1)
-        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(changeLiabilityReturn)))
-        val result = TestChangeLiabilityReturnController.convertPreviousSubmittedReturnToCachedDraft(atedRefNo, formBundle1).apply(FakeRequest())
+        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any(), Matchers.any())(Matchers.any())).thenReturn(Future.successful(Some(changeLiabilityReturn)))
+        val result = TestChangeLiabilityReturnController.convertPreviousSubmittedReturnToCachedDraft(atedRefNo, formBundle1, periodKey).apply(FakeRequest())
         status(result) must be(OK)
         contentAsJson(result) must be(Json.toJson(changeLiabilityReturn))
       }
 
       "return ChangeLiabilityReturn model, if NOT-found in cache or ETMP" in {
         lazy val changeLiabilityReturn = PropertyDetailsBuilder.getFullPropertyDetails(formBundle1)
-        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
-        val result = TestChangeLiabilityReturnController.convertPreviousSubmittedReturnToCachedDraft(atedRefNo, formBundle1).apply(FakeRequest())
+        when(mockChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(Matchers.eq(atedRefNo), Matchers.eq(formBundle1), Matchers.any(), Matchers.any())(Matchers.any())).thenReturn(Future.successful(None))
+        val result = TestChangeLiabilityReturnController.convertPreviousSubmittedReturnToCachedDraft(atedRefNo, formBundle1, periodKey).apply(FakeRequest())
         status(result) must be(NOT_FOUND)
         contentAsJson(result) must be(Json.parse( """{}"""))
       }
