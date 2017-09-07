@@ -105,11 +105,27 @@ class ChangeLiabilityServiceSpec extends PlaySpec with OneServerPerSuite with Mo
         result must be(Some(updateChangeLiabilityReturnWithBankDetails(2015, formBundle3, generateLiabilityBankDetails).copy(timeStamp = new DateTime(2005, 3, 26, 12, 0, 0, 0))))
       }
 
+      "return Some(ChangeLiabilityReturn) if form-bundle not-found in cache, but found in ETMP - also cache it in mongo - based on previous return" in {
+        when(mockPropertyDetailsCache.fetchPropertyDetails(Matchers.eq(atedRefNo)))
+          .thenReturn(Future.successful(Seq()))
+        when(mockEtmpConnector.getFormBundleReturns(Matchers.eq(atedRefNo), Matchers.eq(formBundle1.toString))).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(Json.toJson(formBundleResponse1)))))
+        val result = await(TestChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(atedRefNo, formBundle1, Some(true), Some(2016)))
+
+        result.get.title.isDefined must be(true)
+        result.get.calculated.isDefined must be(false)
+        result.get.formBundleReturn.isDefined must be(true)
+        result.get.value.isDefined must be(true)
+        result.get.period.isDefined must be(false)
+        result.get.bankDetails.isDefined must be(false)
+        result.get.periodKey must be(2016)
+
+      }
+
       "return Some(ChangeLiabilityReturn) if form-bundle not-found in cache, but found in ETMP - also cache it in mongo" in {
         when(mockPropertyDetailsCache.fetchPropertyDetails(Matchers.eq(atedRefNo)))
           .thenReturn(Future.successful(Seq()))
         when(mockEtmpConnector.getFormBundleReturns(Matchers.eq(atedRefNo), Matchers.eq(formBundle1.toString))).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(Json.toJson(formBundleResponse1)))))
-        val result = await(TestChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(atedRefNo, formBundle1, Some(true)))
+        val result = await(TestChangeLiabilityReturnService.convertSubmittedReturnToCachedDraft(atedRefNo, formBundle1))
 
         result.get.title.isDefined must be(true)
         result.get.calculated.isDefined must be(false)
@@ -117,6 +133,7 @@ class ChangeLiabilityServiceSpec extends PlaySpec with OneServerPerSuite with Mo
         result.get.value.isDefined must be(true)
         result.get.period.isDefined must be(true)
         result.get.bankDetails.isDefined must be(false)
+        result.get.periodKey must be(2015)
 
       }
 

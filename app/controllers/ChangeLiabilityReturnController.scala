@@ -65,9 +65,9 @@ trait ChangeLiabilityReturnController extends BaseController {
     }
   }
 
-  def convertPreviousSubmittedReturnToCachedDraft(accountRef: String, formBundle: String) = Action.async { implicit request =>
+  def convertPreviousSubmittedReturnToCachedDraft(accountRef: String, formBundle: String, period: Int) = Action.async { implicit request =>
     for {
-      changeLiabilityResponse <- changeLiabilityService.convertSubmittedReturnToCachedDraft(accountRef, formBundle, Some(true))
+      changeLiabilityResponse <- changeLiabilityService.convertSubmittedReturnToCachedDraft(accountRef, formBundle, Some(true), Some(period))
     } yield {
       changeLiabilityResponse match {
         case Some(x) => Ok(Json.toJson(x))

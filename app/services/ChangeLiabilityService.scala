@@ -33,7 +33,7 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
 
   def subscriptionDataService: SubscriptionDataService
 
-  def convertSubmittedReturnToCachedDraft(atedRefNo: String, oldFormBundleNo: String, fromSelectedPrevReturn: Option[Boolean] = None)(implicit hc: HeaderCarrier) = {
+  def convertSubmittedReturnToCachedDraft(atedRefNo: String, oldFormBundleNo: String, fromSelectedPrevReturn: Option[Boolean] = None, period: Option[Int] = None)(implicit hc: HeaderCarrier) = {
     for {
       cachedData <- retrieveDraftPropertyDetail(atedRefNo, oldFormBundleNo)
       cachedChangeLiability <- {
@@ -53,10 +53,16 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
                   }
                   val changeLiability = PropertyDetails(atedRefNo,
                     id = id,
-                    periodKey = liabilityReturn.periodKey.trim.toInt,
+                    periodKey = fromSelectedPrevReturn match {
+                      case Some(true) => period.get
+                      case _ => liabilityReturn.periodKey.trim.toInt
+                    },
                     address,
                     title,
-                    period = Some(periodData),
+                    period = fromSelectedPrevReturn match {
+                      case Some(true) => None
+                      case _ => Some(periodData)
+                    },
                     value = Some(PropertyDetailsValue()),
                     formBundleReturn = Some(liabilityReturn)
                   )
