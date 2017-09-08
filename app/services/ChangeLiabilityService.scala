@@ -63,7 +63,10 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
                       case Some(true) => None
                       case _ => Some(periodData)
                     },
-                    value = Some(PropertyDetailsValue()),
+                    value = Some(PropertyDetailsValue(isValuedByAgent = Some(liabilityReturn.professionalValuation),
+                      isPropertyRevalued = Some(false),
+                      partAcqDispDate = liabilityReturn.dateOfAcquisition,
+                      revaluedValue = liabilityReturn.valueAtAcquisition)),
                     formBundleReturn = Some(liabilityReturn)
                   )
                   retrieveDraftPropertyDetails(atedRefNo) map {

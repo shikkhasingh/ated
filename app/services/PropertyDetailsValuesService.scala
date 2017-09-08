@@ -64,8 +64,8 @@ trait PropertyDetailsValuesService extends ReliefConstants {
           if (foundPropertyDetails.value.flatMap(_.hasValueChanged) == Some(newValue))
             foundPropertyDetails
           else {
-            val updatedValues = Some(PropertyDetailsValue(hasValueChanged = Some(newValue)))
-            foundPropertyDetails.copy(value = updatedValues, calculated = None)
+            val updatedValue = foundPropertyDetails.value.map(_.copy(hasValueChanged = Some(newValue)))
+            foundPropertyDetails.copy(value = updatedValue, calculated = None)
           }
       }
       Future.successful(updatedPropertyDetails)

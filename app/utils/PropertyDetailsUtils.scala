@@ -142,6 +142,7 @@ object PropertyDetailsUtils extends ReliefConstants {
           case (Some(false), Some(true), _) => value.newBuildValue
           case (Some(false), Some(false), _) => value.notNewBuildValue
           case (_, _, Some(true)) => value.revaluedValue
+          case (_, _, Some(false)) => value.revaluedValue
           case _ => None
         }
     }
@@ -155,6 +156,7 @@ object PropertyDetailsUtils extends ReliefConstants {
         value.localAuthRegDate))
       case (Some(false), Some(false), _) => (value.notNewBuildValue, value.notNewBuildDate)
       case (_, _, Some(true)) => (value.revaluedValue, value.partAcqDispDate)
+      case (_, _, Some(false)) => (value.revaluedValue, value.partAcqDispDate)
       case _ => (None, None)
     }
   }

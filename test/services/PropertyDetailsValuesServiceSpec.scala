@@ -152,7 +152,7 @@ class PropertyDetailsValuesServiceSpec extends PlaySpec with OneServerPerSuite w
       newProp.get.addressProperty must be(propertyDetails3.addressProperty)
       newProp.get.value.isDefined must be (true)
       newProp.get.value.get.hasValueChanged must be(Some(false))
-      newProp.get.value.get.revaluedValue must be(None)
+      newProp.get.value.get.revaluedValue must be(Some(1111.11))
 
     }
 
