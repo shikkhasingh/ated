@@ -69,7 +69,6 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
                       revaluedValue = liabilityReturn.valueAtAcquisition)),
                     formBundleReturn = Some(liabilityReturn)
                   )
-                  println(s"---------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>---------------$changeLiability")
                   retrieveDraftPropertyDetails(atedRefNo) map {
                     list =>
                       val updatedList = list :+ changeLiability
