@@ -727,8 +727,8 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         revaluedValue = Some(BigDecimal(1111.11)))
 
       val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
-      res._1 must be (Some(BigDecimal(4444.44)))
-      res._2 must be (Some(new LocalDate("2015-01-01")))
+      res._1 must be (Some(BigDecimal(1111.11)))
+      res._2 must be (Some(new LocalDate("2013-02-02")))
     }
   }
 
