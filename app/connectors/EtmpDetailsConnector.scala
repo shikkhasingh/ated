@@ -51,34 +51,6 @@ trait EtmpDetailsConnector extends ServicesConfig with RawResponseReads with Aud
 
   def metrics: Metrics
 
-  def submitPendingClient(agentClientRelationship: Option[EtmpAgentClientRelationship]): Future[HttpResponse] = {
-    implicit val headerCarrier = createHeaderCarrier
-    val postUrl = s"""$serviceUrl/$atedBaseURI/$submitClientRelationship"""
-    agentClientRelationship match {
-      case Some(agentClientRel) =>
-        val timerContext = metrics.startTimer(MetricsEnum.EtmpSubmitPendingClient)
-        val jsonData = Json.toJson(agentClientRel)
-        http.POST(postUrl, jsonData) map { response =>
-          timerContext.stop()
-          auditSubmitPendingClient(agentClientRel: EtmpAgentClientRelationship, response)
-          response.status match {
-            case OK | NO_CONTENT =>
-              metrics.incrementSuccessCounter(MetricsEnum.EtmpSubmitPendingClient)
-              response
-            case status =>
-              metrics.incrementFailedCounter(MetricsEnum.EtmpSubmitPendingClient)
-              Logger.warn(s"[EtmpDetailsConnector][submitPendingClient] - status: $status")
-              doHeaderEvent("submitPendingClientFailedHeaders", response.allHeaders)
-              doFailedAudit("submitPendingClientFailed", postUrl, Some(jsonData.toString), response.body)
-              response
-          }
-        }
-      case None =>
-        val notFound = Json.parse( """{"reason" : "No Pending Client found"}""")
-        Future.successful(HttpResponse(NOT_FOUND, Some(notFound)))
-    }
-  }
-
   def getDetails(identifier: String, identifierType: String): Future[HttpResponse] = {
     def getDetailsFromEtmp(getUrl: String): Future[HttpResponse] = {
       implicit val hc = createHeaderCarrier
@@ -144,7 +116,7 @@ trait EtmpDetailsConnector extends ServicesConfig with RawResponseReads with Aud
           response
         case status =>
           metrics.incrementFailedCounter(MetricsEnum.EtmpUpdateSubscriptionData)
-          Logger.warn(s"[EtmpDetailsConnector][saveSubscriptionData] - status: $status")
+          Logger.warn(s"[EtmpDetailsConnector][updateSubscriptionData] - status: $status")
           doHeaderEvent("updateSubscriptionDataFailedHeaders", response.allHeaders)
           doFailedAudit("updateSubscriptionDataFailed", putUrl, Some(jsonData.toString), response.body)
           response
@@ -177,21 +149,6 @@ trait EtmpDetailsConnector extends ServicesConfig with RawResponseReads with Aud
   private def createHeaderCarrier: HeaderCarrier = {
     HeaderCarrier(extraHeaders = Seq("Environment" -> urlHeaderEnvironment),
       authorization = Some(Authorization(urlHeaderAuthorization)))
-  }
-
-  private def auditSubmitPendingClient(agentClientRel: EtmpAgentClientRelationship,
-                                       response: HttpResponse)(implicit hc: HeaderCarrier) {
-    val eventType = response.status match {
-      case OK => EventTypes.Succeeded
-      case _ => EventTypes.Failed
-    }
-    sendDataEvent(transactionName = "etmpSubmitPendingClient",
-      detail = Map("txName" -> "etmpSubmitPendingClient",
-        "atedRefNumber" -> s"${agentClientRel.atedRefNumber}",
-        "agentReferenceNumber" -> s"${agentClientRel.agentReferenceNumber}",
-        "responseStatus" -> s"${response.status}",
-        "responseBody" -> s"${response.body}",
-        "status" -> s"${eventType}"))
   }
 
   private def auditUpdateSubscriptionData(atedReferenceNo: String,

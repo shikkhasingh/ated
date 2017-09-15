@@ -116,46 +116,6 @@ class EtmpDetailsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
       }
     }
 
-    "submit Pending Clients" must {
-      "Check the response when we try to submit with Pending Clients response" in {
-        val successResponse = Json.parse( """{"processingDate" :  "2014-12-17T09:30:47Z"}""")
-        implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
-          .thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
-
-        val etmpRelationship = EtmpRelationship(action = "authorise", isExclusiveAgent = true)
-        val agentClientRelationship = EtmpAgentClientRelationship(acknowledgementReference = SessionUtils.getUniqueAckNo,
-          atedRefNumber = "ATED-123", agentReferenceNumber = "AGENT-123", authorisation = etmpRelationship)
-        val result = TestEtmpDetailsConnector.submitPendingClient(Some(agentClientRelationship))
-        val response = await(result)
-        response.status must be(OK)
-        response.json must be(successResponse)
-      }
-
-      "Check the response when we try to submit no pending client" in {
-        implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-
-        val result = TestEtmpDetailsConnector.submitPendingClient(None)
-        val response = await(result)
-        response.status must be(NOT_FOUND)
-
-      }
-
-      "Check for a failure response when we try to submit pending clients" in {
-        val failureResponse = Json.parse( """{"Reason" : "Service Unavailable"}""")
-        implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any()))
-          .thenReturn(Future.successful(HttpResponse(SERVICE_UNAVAILABLE, responseJson = Some(failureResponse))))
-
-        val etmpRelationship = EtmpRelationship(action = "authorise", isExclusiveAgent = true)
-        val agentClientRelationship = EtmpAgentClientRelationship(acknowledgementReference = SessionUtils.getUniqueAckNo,
-          atedRefNumber = "ATED-123", agentReferenceNumber = "AGENT-123", authorisation = etmpRelationship)
-        val result = TestEtmpDetailsConnector.submitPendingClient(Some(agentClientRelationship))
-        val response = await(result)
-        response.status must be(SERVICE_UNAVAILABLE)
-        response.json must be(failureResponse)
-      }
-    }
 
     "get subscription data" must {
       "Correctly return no data if there is none" in {
