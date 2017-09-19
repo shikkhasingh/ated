@@ -19,7 +19,7 @@ package services
 import connectors.{AuthConnector, EtmpReturnsConnector}
 import models._
 import org.joda.time.LocalDate
-import repository.{PropertyDetailsMongoRepository, PropertyDetailsRepository}
+import repository.PropertyDetailsMongoRepository
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.ReliefConstants
 

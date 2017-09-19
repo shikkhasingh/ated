@@ -29,7 +29,7 @@ import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import reactivemongo.api.commands.WriteResult
-import repository.{PropertyDetailsCached, PropertyDetailsMongoRepository, PropertyDetailsRepository}
+import repository.{PropertyDetailsCached, PropertyDetailsMongoRepository}
 import uk.gov.hmrc.mongo.DatabaseUpdate
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse, InternalServerException}
 

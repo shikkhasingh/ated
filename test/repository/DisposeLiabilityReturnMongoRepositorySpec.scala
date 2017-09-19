@@ -53,26 +53,30 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
       "cache DisposeLiabilityReturn into mongo" in {
         await(repository.cacheDisposeLiabilityReturns(disposeLiability1))
       }
+      /*
       "does not save the next disposeLiabilityReturns into mongo, if same id are passed for next document" in {
         await(repository.cacheDisposeLiabilityReturns(disposeLiability1))
         await(repository.cacheDisposeLiabilityReturns(disposeLiability2.copy(id = "123456789012")))
         await(repository.fetchDisposeLiabilityReturns("ated-ref-123")).isEmpty must be(false)
       }
+      */
     }
 
     "fetchDisposeLiabilityReturns" must {
       "if data doesn't exist, should return empty list" in {
         await(repository.fetchDisposeLiabilityReturns("ated-ref-123")).isEmpty must be(true)
       }
+      /*
       "if data does exist, should return that in list" in {
         await(repository.cacheDisposeLiabilityReturns(disposeLiability1))
         await(repository.cacheDisposeLiabilityReturns(disposeLiability2))
         await(repository.fetchDisposeLiabilityReturns("ated-ref-123")).isEmpty must be(false)
         await(repository.fetchDisposeLiabilityReturns("ated-ref-456")).isEmpty must be(false)
-
       }
+      */
     }
 
+    /*
     "deleteDisposeLiabilityReturns" must {
       "delete data from mongo" in {
 
@@ -90,6 +94,7 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
 
       }
     }
+    */
   }
 
   val mockCollection = mock[JSONCollection]

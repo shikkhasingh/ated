@@ -62,6 +62,8 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[DisposeLiabilityReturn, BSONObjectID]("disposeLiabilityReturns", mongo, DisposeLiabilityReturn.formats, ReactiveMongoFormats.objectIdFormats)
     with DisposeLiabilityReturnMongoRepository {
 
+  collection.drop()
+
   val metrics: Metrics = Metrics
 
   override def indexes: Seq[Index] = {

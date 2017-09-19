@@ -21,7 +21,7 @@ import models._
 import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
-import repository.{PropertyDetailsMongoRepository, PropertyDetailsRepository}
+import repository.PropertyDetailsMongoRepository
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse, InternalServerException}
 import utils._
 import utils.AtedUtils._
