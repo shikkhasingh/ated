@@ -30,7 +30,7 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
   with Awaiting
   with MockitoSugar
   with BeforeAndAfterEach {
-  
+
   def repository(implicit mongo: () => DB) = new DisposeLiabilityReturnReactiveMongoRepository()
 
   override def beforeEach(): Unit = {
