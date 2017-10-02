@@ -19,7 +19,6 @@ package utils
 import models.BankDetailsConversions._
 import models._
 import org.joda.time.LocalDate
-import uk.gov.hmrc.play.http.InternalServerException
 import utils.PropertyDetailsUtils._
 import utils.ReliefUtils.{Gb, Post, PreCalculation}
 

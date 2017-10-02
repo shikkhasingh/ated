@@ -29,27 +29,23 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.Helpers._
+import uk.gov.hmrc.http._
+import uk.gov.hmrc.http.logging.SessionId
 import uk.gov.hmrc.play.audit.model.Audit
-import uk.gov.hmrc.play.http.logging.SessionId
-import uk.gov.hmrc.play.http.ws.{WSGet, WSPost, WSPut}
-import uk.gov.hmrc.play.http.{HeaderCarrier, _}
 import utils.SessionUtils
 
 import scala.concurrent.Future
 
 class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with MockitoSugar with BeforeAndAfter {
 
-  class MockHttp extends WSGet with WSPost with WSPut {
-    override val hooks = NoneRequired
-  }
-
-  val mockWSHttp = mock[MockHttp]
+  trait MockedVerbs extends CoreGet with CorePost with CorePut
+  val mockWSHttp: CoreGet with CorePost with CorePut = mock[MockedVerbs]
 
   val testFormBundleNum = "123456789012"
 
   object TestEtmpReturnsConnector extends EtmpReturnsConnector {
     val serviceUrl = "etmp-hod"
-    val http: HttpGet with HttpPost with HttpPut = mockWSHttp
+    val http: CoreGet with CorePost with CorePut = mockWSHttp
     val urlHeaderEnvironment: String = config("etmp-hod").getString("environment").getOrElse("")
     val urlHeaderAuthorization: String = s"Bearer ${config("etmp-hod").getString("authorization-token").getOrElse("")}"
     val audit: Audit = new TestAudit
@@ -76,7 +72,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
       "Correctly Submit a return with reliefs" in {
         val successResponse = Json.parse( """{"processingDate": "2001-12-17T09:30:47Z"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseJson = Some(successResponse))))
+        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseJson = Some(successResponse))))
         val reliefReturns = Seq(EtmpReliefReturns("", LocalDate.now(), LocalDate.now(), ""))
         val atedReturns = SubmitEtmpReturnsRequest(acknowledgementReference = SessionUtils.getUniqueAckNo,
           agentReferenceNumber = None, reliefReturns = Some(reliefReturns), liabilityReturns = None)
@@ -89,7 +85,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
       "Correctly Submit a return with liabilities" in {
         val successResponse = Json.parse( """{"processingDate": "2001-12-17T09:30:47Z"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseJson = Some(successResponse))))
+        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseJson = Some(successResponse))))
         val _propertyDetails = Some(EtmpPropertyDetails(address = EtmpAddress("line1", "line2", Some("line3"), Some("line4"), "", Some(""))))
         val liabilityReturns = Seq(EtmpLiabilityReturns("", "", "", propertyDetails = _propertyDetails, dateOfValuation = LocalDate.now(), professionalValuation = false, ninetyDayRuleApplies = false, lineItems = Nil))
         val atedReturns = SubmitEtmpReturnsRequest(acknowledgementReference = SessionUtils.getUniqueAckNo,
@@ -103,7 +99,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
       "check for a failure response" in {
         val failureResponse = Json.parse( """{"Reason" : "Service Unavailable"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(503, responseJson = Some(failureResponse))))
+        when(mockWSHttp.POST[JsValue, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(503, responseJson = Some(failureResponse))))
         val atedReturns = SubmitEtmpReturnsRequest(acknowledgementReference = SessionUtils.getUniqueAckNo,
           agentReferenceNumber = None, reliefReturns = None, liabilityReturns = None)
         val result = TestEtmpReturnsConnector.submitReturns("ATED-123", atedReturns)
@@ -118,7 +114,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val notFoundResponse = Json.parse( """{}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
-        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(NOT_FOUND, Some(notFoundResponse))))
+        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(NOT_FOUND, Some(notFoundResponse))))
 
         val result = TestEtmpReturnsConnector.getSummaryReturns("ATED-123", 1)
         val response = await(result)
@@ -130,7 +126,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val successResponse = Json.parse( """{"processingDate": "2001-12-17T09:30:47Z"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
-        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponse))))
+        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponse))))
 
         val result = TestEtmpReturnsConnector.getSummaryReturns("ATED-123", 1)
         val response = await(result)
@@ -142,7 +138,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val successResponse = Json.parse( """{"processingDate": "2001-12-17T09:30:47Z"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
-        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(BAD_REQUEST, Some(successResponse))))
+        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(BAD_REQUEST, Some(successResponse))))
 
         val result = TestEtmpReturnsConnector.getSummaryReturns("ATED-123", 1)
         val response = await(result)
@@ -156,7 +152,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val notFoundResponse = Json.parse( """{}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
-        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(NOT_FOUND, Some(notFoundResponse))))
+        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(NOT_FOUND, Some(notFoundResponse))))
 
         val result = TestEtmpReturnsConnector.getFormBundleReturns("ATED-123", testFormBundleNum)
         val response = await(result)
@@ -168,7 +164,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val successResponse = Json.parse( """{"processingDate": "2001-12-17T09:30:47Z"}""")
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
 
-        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponse))))
+        when(mockWSHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, Some(successResponse))))
 
         val result = TestEtmpReturnsConnector.getFormBundleReturns("ATED-123", testFormBundleNum)
         val response = await(result)
@@ -197,7 +193,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
           lineItem = Seq(lineItem1))
         val editLiablityReturns = EditLiabilityReturnsRequestModel(acknowledgmentReference = SessionUtils.getUniqueAckNo, liabilityReturn = Seq(editLiabReturnReq))
 
-        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
+        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
 
 
         val result = TestEtmpReturnsConnector.submitEditedLiabilityReturns("ATED-123", editLiablityReturns, true)
@@ -216,7 +212,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val editLiabReturnReq = EditLiabilityReturnsRequest(oldFormBundleNumber = "form-123", mode = "Pre-Calculation", periodKey = "2015", propertyDetails = p, dateOfValuation = LocalDate.now, professionalValuation = true, ninetyDayRuleApplies = true, lineItem = Seq(lineItem1))
         val editLiablityReturns = EditLiabilityReturnsRequestModel(acknowledgmentReference = SessionUtils.getUniqueAckNo, liabilityReturn = Seq(editLiabReturnReq))
 
-        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
+        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
 
 
         val result = TestEtmpReturnsConnector.submitEditedLiabilityReturns("ATED-123", editLiablityReturns)
@@ -235,7 +231,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val editLiabReturnReq = EditLiabilityReturnsRequest(oldFormBundleNumber = "form-123", mode = "Pre-Calculation", periodKey = "2015", propertyDetails = p, dateOfValuation = LocalDate.now, professionalValuation = true, ninetyDayRuleApplies = true, lineItem = Seq(lineItem1))
         val editLiablityReturns = EditLiabilityReturnsRequestModel(acknowledgmentReference = SessionUtils.getUniqueAckNo, liabilityReturn = Seq(editLiabReturnReq))
 
-        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
+        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
 
 
         val result = TestEtmpReturnsConnector.submitEditedLiabilityReturns("ATED-123", editLiablityReturns)
@@ -254,7 +250,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val editLiabReturnReq = EditLiabilityReturnsRequest(oldFormBundleNumber = "form-123", mode = "Pre-Calculation", periodKey = "2015", propertyDetails = p, dateOfValuation = LocalDate.now, professionalValuation = true, ninetyDayRuleApplies = true, lineItem = Seq(lineItem1))
         val editLiablityReturns = EditLiabilityReturnsRequestModel(acknowledgmentReference = SessionUtils.getUniqueAckNo, liabilityReturn = Seq(editLiabReturnReq))
 
-        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
+        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.eq(Json.toJson(editLiablityReturns)))(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(OK, responseJson = Some(successResponse))))
 
 
         val result = TestEtmpReturnsConnector.submitEditedLiabilityReturns("ATED-123", editLiablityReturns)
@@ -268,7 +264,7 @@ class EtmpReturnsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
         val failureResponse = Json.parse( """{"Reason" : "Service Unavailable"}""")
 
         implicit val hc = new HeaderCarrier(sessionId = Some(SessionId(s"session-${UUID.randomUUID}")))
-        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, responseJson = Some(failureResponse))))
+        when(mockWSHttp.PUT[JsValue, HttpResponse](Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(INTERNAL_SERVER_ERROR, responseJson = Some(failureResponse))))
 
         val address = EtmpAddress("address-line-1", "address-line-2", None, None, "GB")
         val p = EtmpPropertyDetails(address = address)

@@ -23,12 +23,12 @@ import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
 import repository.PropertyDetailsMongoRepository
-import uk.gov.hmrc.play.http.{BadRequestException, HeaderCarrier, HttpResponse, InternalServerException}
 import utils._
 import utils.AtedUtils._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ BadRequestException, HeaderCarrier, HttpResponse, InternalServerException }
 
 trait PropertyDetailsService extends PropertyDetailsBaseService with ReliefConstants with NotificationService {
 

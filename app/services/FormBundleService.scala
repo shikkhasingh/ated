@@ -17,9 +17,9 @@
 package services
 
 import connectors.EtmpReturnsConnector
-import uk.gov.hmrc.play.http.HttpResponse
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HttpResponse
 
 trait FormBundleService {
 

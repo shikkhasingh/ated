@@ -19,7 +19,6 @@ package utils
 import models._
 import org.joda.time.LocalDate
 import play.api.Logger
-import uk.gov.hmrc.play.http.InternalServerException
 import utils.PropertyDetailsUtils._
 
 

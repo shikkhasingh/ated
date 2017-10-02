@@ -23,11 +23,10 @@ import models._
 import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.Json
+import uk.gov.hmrc.http._
+import uk.gov.hmrc.http.logging.Authorization
 import uk.gov.hmrc.play.audit.model.{Audit, EventTypes}
 import uk.gov.hmrc.play.config.{AppName, ServicesConfig}
-import uk.gov.hmrc.play.http._
-import uk.gov.hmrc.play.http.logging.Authorization
-import utils.AtedConstants._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -47,7 +46,7 @@ trait EtmpDetailsConnector extends ServicesConfig with RawResponseReads with Aud
 
   def urlHeaderAuthorization: String
 
-  def http: HttpGet with HttpPost with HttpPut
+  def http: CoreGet with CorePost with CorePut
 
   def metrics: Metrics
 
@@ -197,7 +196,7 @@ object EtmpDetailsConnector extends EtmpDetailsConnector {
 
   val urlHeaderAuthorization: String = s"Bearer ${config("etmp-hod").getString("authorization-token").fold("")(x => x)}"
 
-  val http: HttpGet with HttpPost with HttpPut = WSHttp
+  val http: CoreGet with CorePost with CorePut = WSHttp
 
   val audit: Audit = new Audit(AppName.appName, MicroserviceAuditConnector)
 

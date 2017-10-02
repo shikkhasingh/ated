@@ -20,10 +20,11 @@ import config.WSHttp
 import play.api.Logger
 import play.api.http.Status._
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.{HeaderCarrier, _}
+import uk.gov.hmrc.play.http._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http._
 
 trait AuthConnector extends ServicesConfig with RawResponseReads {
 
@@ -31,7 +32,7 @@ trait AuthConnector extends ServicesConfig with RawResponseReads {
 
   def authorityUri: String
 
-  def http: HttpGet with HttpPost
+  def http: CoreGet with CorePost
 
   def agentReferenceNo(implicit hc: HeaderCarrier): Future[Option[String]] = {
     val getUrl = s"""$serviceUrl/$authorityUri"""
@@ -52,5 +53,5 @@ trait AuthConnector extends ServicesConfig with RawResponseReads {
 object AuthConnector extends AuthConnector {
   val serviceUrl = baseUrl("auth")
   val authorityUri = "auth/authority"
-  val http: HttpGet with HttpPost = WSHttp
+  val http: CoreGet with CorePost = WSHttp
 }

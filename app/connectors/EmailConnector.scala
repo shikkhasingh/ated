@@ -16,15 +16,13 @@
 
 package connectors
 
-import audit.Auditable
-import config.{MicroserviceAuditConnector, WSHttp}
+import config.WSHttp
 import models.SendEmailRequest
 import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.Json
-import uk.gov.hmrc.play.audit.model.Audit
-import uk.gov.hmrc.play.config.{AppName, ServicesConfig}
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpPut}
+import uk.gov.hmrc.http._
+import uk.gov.hmrc.play.config.ServicesConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -39,7 +37,7 @@ trait EmailConnector extends ServicesConfig with RawResponseReads {
   val sendEmailUri: String = "hmrc/email"
   val serviceUrl = baseUrl("email")
 
-  def http: HttpGet with HttpPost with HttpPut
+  def http: CoreGet with CorePost with CorePut
 
   def sendTemplatedEmail(emailAddress: String, templateName: String, params: Map[String, String])(implicit hc: HeaderCarrier): Future[EmailStatus] = {
 
@@ -64,6 +62,6 @@ trait EmailConnector extends ServicesConfig with RawResponseReads {
 
 object EmailConnector extends EmailConnector {
   // $COVERAGE-OFF$
-  val http: HttpGet with HttpPost with HttpPut = WSHttp
+  val http: CoreGet with CorePost with CorePut = WSHttp
   // $COVERAGE-OFF$
 }

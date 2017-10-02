@@ -21,11 +21,11 @@ import models.{ReliefsTaxAvoidance, SubmitEtmpReturnsRequest}
 import play.api.http.Status._
 import play.api.libs.json.Json
 import repository.ReliefsMongoRepository
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.ReliefUtils
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 trait ReliefsService extends NotificationService {
 

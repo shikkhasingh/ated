@@ -18,7 +18,7 @@ package utils
 
 import models._
 import org.joda.time.LocalDate
-import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.http.HeaderCarrier
 
 object ReliefUtils extends ReliefUtils
 
