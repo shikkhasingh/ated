@@ -22,10 +22,10 @@ import builders.ReliefBuilder
 import models.{Reliefs, TaxAvoidance}
 import org.joda.time.LocalDate
 import org.scalatestplus.play.PlaySpec
-import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.play.http.logging.SessionId
 
 import scala.collection.Seq
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.logging.SessionId
 
 class ReliefUtilsSpec extends PlaySpec with ReliefConstants {
 

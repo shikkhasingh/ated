@@ -23,11 +23,11 @@ import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.{JsValue, Json}
 import repository.{PropertyDetailsDelete, PropertyDetailsMongoRepository}
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse, InternalServerException}
 import utils._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait PropertyDetailsBaseService extends ReliefConstants {
 

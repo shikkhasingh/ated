@@ -20,13 +20,13 @@ import connectors.EtmpReturnsConnector
 import models._
 import org.joda.time.LocalDate
 import play.api.http.Status._
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.AtedConstants._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import utils.ReliefUtils._
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 trait ReturnSummaryService {
 

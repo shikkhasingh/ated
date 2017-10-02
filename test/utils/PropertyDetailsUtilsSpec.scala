@@ -20,8 +20,8 @@ import builders.PropertyDetailsBuilder
 import models._
 import org.joda.time.LocalDate
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
-import uk.gov.hmrc.play.http.InternalServerException
 import utils.PropertyDetailsUtils._
+import uk.gov.hmrc.http.InternalServerException
 
 
 class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneServerPerSuite {

@@ -18,17 +18,11 @@ package repository
 
 import builders.ChangeLiabilityReturnBuilder
 import models.DisposeLiabilityReturn
-import org.mockito.Mockito.{reset, when}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import reactivemongo.api.DB
-import reactivemongo.api.indexes.CollectionIndexesManager
-import reactivemongo.json.collection.JSONCollection
 import uk.gov.hmrc.mongo.{Awaiting, MongoSpecSupport}
-
-
-import scala.concurrent.Future
 
 class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
   with OneServerPerSuite
@@ -36,9 +30,12 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
   with Awaiting
   with MockitoSugar
   with BeforeAndAfterEach {
-
-
+  
   def repository(implicit mongo: () => DB) = new DisposeLiabilityReturnReactiveMongoRepository()
+
+  override def beforeEach(): Unit = {
+    await(repository.drop)
+  }
 
   "DisposeLiabilityReturnRepository" must {
 
@@ -91,25 +88,6 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
 
       }
     }
-  }
-
-  val mockCollection = mock[JSONCollection]
-
-  override def beforeEach(): Unit = {
-    await(repository.drop)
-    reset(mockCollection)
-    setupIndexesManager
-  }
-
-  private def setupIndexesManager: CollectionIndexesManager = {
-    val mockIndexesManager = mock[CollectionIndexesManager]
-    when(mockCollection.indexesManager).thenReturn(mockIndexesManager)
-    when(mockIndexesManager.dropAll) thenReturn Future.successful(0)
-    mockIndexesManager
-  }
-
-  class TestDisposeLiabilityReturnReactiveMongoRepository extends DisposeLiabilityReturnReactiveMongoRepository {
-    override lazy val collection = mockCollection
   }
 
 }

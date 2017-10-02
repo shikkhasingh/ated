@@ -18,7 +18,7 @@ package utils
 
 import models._
 import org.joda.time.LocalDate
-import uk.gov.hmrc.play.http.InternalServerException
+import uk.gov.hmrc.http.InternalServerException
 
 
 object PropertyDetailsUtils extends ReliefConstants {

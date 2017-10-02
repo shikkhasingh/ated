@@ -17,16 +17,11 @@
 package repository
 
 import builders.PropertyDetailsBuilder
-import org.mockito.Mockito.{reset, when}
 import org.scalatest._
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import reactivemongo.api.DB
-import reactivemongo.api.indexes.CollectionIndexesManager
-import reactivemongo.json.collection.JSONCollection
 import uk.gov.hmrc.mongo.{Awaiting, MongoSpecSupport}
-
-import scala.concurrent.Future
 
 class PropertyDetailsMongoRepositorySpec extends PlaySpec
   with OneServerPerSuite
@@ -38,6 +33,9 @@ class PropertyDetailsMongoRepositorySpec extends PlaySpec
 
   def repository(implicit mongo: () => DB) = new PropertyDetailsReactiveMongoRepository
 
+  override def beforeEach(): Unit = {
+    await(repository.drop)
+  }
 
   lazy val propertyDetails1 = PropertyDetailsBuilder.getPropertyDetails("1")
   lazy val propertyDetails2 = PropertyDetailsBuilder.getPropertyDetails("2")
@@ -128,24 +126,4 @@ class PropertyDetailsMongoRepositorySpec extends PlaySpec
     await(repository.fetchPropertyDetails("ated-ref-1")).isEmpty must be (true)
 
   }
-
-  val mockCollection = mock[JSONCollection]
-
-  override def beforeEach(): Unit = {
-    await(repository.drop)
-    reset(mockCollection)
-    setupIndexesManager
-  }
-
-  private def setupIndexesManager: CollectionIndexesManager = {
-    val mockIndexesManager = mock[CollectionIndexesManager]
-    when(mockCollection.indexesManager).thenReturn(mockIndexesManager)
-    when(mockIndexesManager.dropAll) thenReturn Future.successful(0)
-    mockIndexesManager
-  }
-
-  class TestPropertyDetailsReactiveMongoRepository extends PropertyDetailsReactiveMongoRepository {
-    override lazy val collection = mockCollection
-  }
-
 }

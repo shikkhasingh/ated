@@ -19,17 +19,11 @@ package repository
 
 import builders.ReliefBuilder
 import models.{Reliefs, TaxAvoidance}
-import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterEach}
+import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
-import play.api.test.Helpers._
 import reactivemongo.api.DB
-import reactivemongo.api.indexes.CollectionIndexesManager
-import reactivemongo.json.collection.JSONCollection
 import uk.gov.hmrc.mongo.{Awaiting, MongoSpecSupport}
-
-import scala.concurrent.Future
 
 class ReliefsMongoRepositorySpec extends PlaySpec
   with OneServerPerSuite
@@ -38,8 +32,11 @@ class ReliefsMongoRepositorySpec extends PlaySpec
   with MockitoSugar
   with BeforeAndAfterEach {
 
-
   def repository(implicit mongo: () => DB) = new ReliefsReactiveMongoRepository
+
+  override def beforeEach(): Unit = {
+    await(repository.drop)
+  }
 
   val atedRefNo1 = "atedRef123"
   val periodKey = 2015
@@ -76,26 +73,6 @@ class ReliefsMongoRepositorySpec extends PlaySpec
       await(repository.deleteDraftReliefByYear(atedRefNo1, periodKey))
       await(repository.fetchReliefs(atedRefNo1)).size must be(1)
     }
-
-  }
-
-  val mockCollection = mock[JSONCollection]
-
-  override def beforeEach(): Unit = {
-    await(repository.drop)
-    reset(mockCollection)
-    setupIndexesManager
-  }
-
-  private def setupIndexesManager: CollectionIndexesManager = {
-    val mockIndexesManager = mock[CollectionIndexesManager]
-    when(mockCollection.indexesManager).thenReturn(mockIndexesManager)
-    when(mockIndexesManager.dropAll) thenReturn Future.successful(0)
-    mockIndexesManager
-  }
-
-  class TestMandateRepository extends ReliefsReactiveMongoRepository {
-    override lazy val collection = mockCollection
   }
 
 }

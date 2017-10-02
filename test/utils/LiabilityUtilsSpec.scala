@@ -21,7 +21,6 @@ import models._
 import org.joda.time.LocalDate
 import org.scalatestplus.play.PlaySpec
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.http.InternalServerException
 import org.scalatestplus.play.OneServerPerSuite
 
 class LiabilityUtilsSpec extends PlaySpec with ReliefConstants with OneServerPerSuite {

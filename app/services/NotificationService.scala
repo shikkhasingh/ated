@@ -20,9 +20,9 @@ import connectors.{EmailConnector, EmailNotSent, EmailStatus}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.JsValue
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait NotificationService {
 

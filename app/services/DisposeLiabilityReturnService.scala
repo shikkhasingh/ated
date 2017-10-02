@@ -22,13 +22,13 @@ import play.api.Logger
 import play.api.http.Status._
 import play.api.libs.json.Json
 import repository.DisposeLiabilityReturnMongoRepository
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.ReliefUtils._
 import utils.SessionUtils._
 import utils.{ChangeLiabilityUtils, PropertyDetailsUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 trait DisposeLiabilityReturnService extends NotificationService {
 

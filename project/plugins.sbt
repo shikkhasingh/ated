@@ -17,3 +17,5 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.12")
 addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.3.0")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.7.0")
+
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.5.2")

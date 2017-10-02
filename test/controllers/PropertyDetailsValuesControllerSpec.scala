@@ -27,7 +27,6 @@ import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
 import services.PropertyDetailsValuesService
 import uk.gov.hmrc.play.audit.model.Audit
-import uk.gov.hmrc.play.http.HttpResponse
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

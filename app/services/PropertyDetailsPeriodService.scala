@@ -20,11 +20,11 @@ import connectors.{AuthConnector, EtmpReturnsConnector}
 import models._
 import org.joda.time.LocalDate
 import repository.PropertyDetailsMongoRepository
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.ReliefConstants
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait PropertyDetailsPeriodService extends ReliefConstants {
 

@@ -30,9 +30,9 @@ import play.api.libs.json.Json
 import play.api.test.Helpers._
 import repository.{DisposeLiabilityReturnCached, DisposeLiabilityReturnMongoRepository}
 import uk.gov.hmrc.mongo.DatabaseUpdate
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 class DisposeLiabilityReturnServiceSpec extends PlaySpec with OneServerPerSuite with MockitoSugar with BeforeAndAfterEach {
 

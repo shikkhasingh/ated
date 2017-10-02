@@ -18,9 +18,9 @@ package utils
 
 import models.{ClientsAgent, RelationshipDetails}
 import org.joda.time.LocalDate
-import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.play.http.logging.SessionId
 import utils.AtedConstants._
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.logging.SessionId
 
 object AtedUtils {
 

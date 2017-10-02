@@ -18,11 +18,11 @@ package services
 
 import connectors.{AuthConnector, EtmpDetailsConnector}
 import models._
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.SessionUtils
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 trait SubscriptionDataService {
 
