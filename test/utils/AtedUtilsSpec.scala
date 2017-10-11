@@ -37,11 +37,6 @@ class AtedUtilsSpec extends PlaySpec {
         AtedUtils.getSessionIdOrAgentCodeAsId(hc, agentCode) must be("JARN1234567")
       }
     }
-    "generatePropertyKey" must {
-      "generate proper 10 digit MDTP key string" in {
-        AtedUtils.generatePropertyKey("1") must be("0000000001")
-      }
-    }
 
     "periodStartDate" must {
       "return start date of period based on period key" in {

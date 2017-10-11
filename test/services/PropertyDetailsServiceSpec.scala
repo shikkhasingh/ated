@@ -78,14 +78,14 @@ class PropertyDetailsServiceSpec extends PlaySpec with OneServerPerSuite with Mo
       |  "liabilityReturnResponse": [
       |    {
       |      "mode": "Post",
-      |      "propertyKey": "0000000002",
+      |      "propertyKey": "2",
       |      "liabilityAmount": "1234.12",
       |      "paymentReference": "aaaaaaaaaaaaaa",
       |      "formBundleNumber": "012345678912"
       |    },
       |    {
       |      "mode": "Pre-Calculation",
-      |      "propertyKey": "0000000001",
+      |      "propertyKey": "1",
       |      "liabilityAmount": "999.99"
       |    }
       |  ]

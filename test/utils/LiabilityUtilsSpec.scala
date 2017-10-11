@@ -39,7 +39,7 @@ class LiabilityUtilsSpec extends PlaySpec with ReliefConstants with OneServerPer
       liabilities.get.liabilityReturns.isDefined must be(true)
       lazy val returns = liabilities.get.liabilityReturns.get
       returns.size must be(1)
-      returns.head.propertyKey must be("0000000001")
+      returns.head.propertyKey must be("1")
       returns.head.mode must be(Post)
     }
 
@@ -56,7 +56,7 @@ class LiabilityUtilsSpec extends PlaySpec with ReliefConstants with OneServerPer
       liabilities.get.liabilityReturns.isDefined must be(true)
       lazy val liabilityreturns = liabilities.get.liabilityReturns.get
       liabilityreturns.size must be(1)
-      liabilityreturns.head.propertyKey must be("0000000001")
+      liabilityreturns.head.propertyKey must be("1")
       liabilityreturns.head.mode must be(PreCalculation)
       liabilityreturns.head.lineItems.size must be (liabilites.size + reliefs.size)
 
@@ -76,7 +76,7 @@ class LiabilityUtilsSpec extends PlaySpec with ReliefConstants with OneServerPer
       liabilities.get.liabilityReturns.isDefined must be(true)
       lazy val liabilityreturns = liabilities.get.liabilityReturns.get
       liabilityreturns.size must be(1)
-      liabilityreturns.head.propertyKey must be("0000000001")
+      liabilityreturns.head.propertyKey must be("1")
       liabilityreturns.head.mode must be(PreCalculation)
       liabilityreturns.head.lineItems.size must be (liabilites.size)
 
@@ -96,7 +96,7 @@ class LiabilityUtilsSpec extends PlaySpec with ReliefConstants with OneServerPer
       liabilities.get.liabilityReturns.isDefined must be(true)
       lazy val liabilityreturns = liabilities.get.liabilityReturns.get
       liabilityreturns.size must be(1)
-      liabilityreturns.head.propertyKey must be("0000000001")
+      liabilityreturns.head.propertyKey must be("1")
       liabilityreturns.head.mode must be(PreCalculation)
       liabilityreturns.head.lineItems.size must be (reliefs.size)
 

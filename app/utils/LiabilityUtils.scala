@@ -62,7 +62,7 @@ trait LiabilityUtils extends ReliefConstants {
                                         professionallyValued : Boolean) = {
 
     val liabilityReturn = EtmpLiabilityReturns(mode = mode,
-      propertyKey = AtedUtils.generatePropertyKey(id),
+      propertyKey = id,
       periodKey = property.periodKey.toString,
       propertyDetails = Some(getEtmpPropertyDetails(property)),
       dateOfAcquisition = propCalc.acquistionDateToUse,

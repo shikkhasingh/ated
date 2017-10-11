@@ -111,7 +111,7 @@ trait PropertyDetailsService extends PropertyDetailsBaseService with ReliefConst
     def getLiabilityAmount(response: JsValue): Option[BigDecimal] = {
       val liabilityResponses = response.as[SubmitEtmpReturnsResponse]
       val result = liabilityResponses.liabilityReturnResponse.flatMap {
-        _.find(liability => liability.propertyKey.equals(AtedUtils.generatePropertyKey(id)))
+        _.find(liability => liability.propertyKey.equals(id))
       }
       result.map(_.liabilityAmount)
     }
