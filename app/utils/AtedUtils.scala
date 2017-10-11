@@ -29,11 +29,7 @@ object AtedUtils {
   }
 
   def createDraftId: String = {
-    java.util.UUID.randomUUID.toString.take(8).toUpperCase()
-  }
-
-  def generatePropertyKey(id: String): String = {
-    "0" * (PropertyKeyLength - id.toString.length) + id
+    java.util.UUID.randomUUID.toString.take(10).toUpperCase()
   }
 
   def periodStartDate(periodKey: Int): LocalDate = new LocalDate(s"$periodKey-$PeriodStartMonth-$PeriodStartDay")
