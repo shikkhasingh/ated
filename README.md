@@ -1,4 +1,5 @@
-# ATED
+ated
+====
 
 Microservice for Annual Tax on Enveloped Dwellings. This implements the main business logic for ATED, communicating with ETMP(HOD) and Mongo Database for storage/retrieval. The microservice is based on the RESTful API structure, receives and sends data using JSON to either from.
 
@@ -11,7 +12,7 @@ The APIs listed below are invoked for different operations from the frontend mic
 ## Relief Return APIs
 
 APIs for creating a relief return where,
-    periodKey = starting year of tax year (e.g. 2016 for '16-'17)
+    periodKey = starting year of tax year (e.g. 2016 for '16-'17)
     atedRefNo = unique identfier for clients subscribed to ATED
 
 | PATH | Supported Methods | Description |
