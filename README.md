@@ -1,6 +1,8 @@
 # ATED
 
-Annual Tax on Enveloped Dwellings micro service
+Microservice for Annual Tax on Enveloped Dwellings. This implements the main business logic for ATED, communicating with ETMP(HOD) and Mongo Database for storage/retrieval. The microservice is based on the RESTful API structure, receives and sends data using JSON to either from.
+
+All data received is validated against the relevant schema to ensure correct format of the data being received.
 
 [![Build Status](https://travis-ci.org/hmrc/ated.svg?branch=master)](https://travis-ci.org/hmrc/ated) [ ![Download](https://api.bintray.com/packages/hmrc/releases/ated/images/download.svg) ](https://bintray.com/hmrc/releases/ated/_latestVersion)
 
@@ -106,7 +108,6 @@ APIs for changing an already submitted return based on old form-bundle number wh
 | ```/ated/:ated/liability-return/calculate/:oldFBNo``` | GET | calculate the edited chargeable return |
 | ```/ated/:ated/liability-return/:oldFBNo/submit``` | POST | submit the edited chargeable return |
 
- 
 ## Dispose submitted chargeable return APIs
 
 APIs for disposing an already submitted return based on old form-bundle number where,
