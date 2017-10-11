@@ -28,8 +28,8 @@ object AtedUtils {
     hc.sessionId.fold(SessionId(agentCode).value)(_.value)
   }
 
-  def createDraftId: String = {
-    java.util.UUID.randomUUID.toString.take(10).toUpperCase()
+  def createPropertyKey: String = {
+    java.util.UUID.randomUUID.toString.takeRight(10).toUpperCase()
   }
 
   def periodStartDate(periodKey: Int): LocalDate = new LocalDate(s"$periodKey-$PeriodStartMonth-$PeriodStartDay")

@@ -52,6 +52,14 @@ class AtedUtilsSpec extends PlaySpec {
       }
     }
 
+    "createDraftId" must {
+      "create an id for submission with 10 alphanumeric characters" in {
+        val id = AtedUtils.createPropertyKey
+        id.length must be(10)
+        id.matches("[A-Z0-9]{10}") must be(true)
+      }
+    }
+
     "getClientsAgentFromEtmpRelationshipData" must {
 
       "if individual is in relationship-detail, concatenate first name and last name with a space in between" in {

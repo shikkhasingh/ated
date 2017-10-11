@@ -46,7 +46,7 @@ trait PropertyDetailsService extends PropertyDetailsBaseService with ReliefConst
                                 (implicit hc: HeaderCarrier): Future[Option[PropertyDetails]] = {
 
     def updatePropertyDetails(propertyDetailsList: Seq[PropertyDetails]): Future[Option[PropertyDetails]] = {
-      Future.successful(Some(PropertyDetails(atedRefNo = atedRefNo, periodKey = periodKey, id = createDraftId, addressProperty = updatedAddress)))
+      Future.successful(Some(PropertyDetails(atedRefNo = atedRefNo, periodKey = periodKey, id = createPropertyKey, addressProperty = updatedAddress)))
     }
     cacheDraftPropertyDetails(atedRefNo, updatePropertyDetails)
   }
