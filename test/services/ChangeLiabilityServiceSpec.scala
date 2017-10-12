@@ -118,7 +118,7 @@ class ChangeLiabilityServiceSpec extends PlaySpec with OneServerPerSuite with Mo
         result.get.period.isDefined must be(false)
         result.get.bankDetails.isDefined must be(false)
         result.get.periodKey must be(2016)
-
+        result.get.id mustNot be(formBundle1)
       }
 
       "return Some(ChangeLiabilityReturn) if form-bundle not-found in cache, but found in ETMP - also cache it in mongo" in {
@@ -134,6 +134,7 @@ class ChangeLiabilityServiceSpec extends PlaySpec with OneServerPerSuite with Mo
         result.get.period.isDefined must be(true)
         result.get.bankDetails.isDefined must be(false)
         result.get.periodKey must be(2015)
+        result.get.id must be(formBundle1)
 
       }
 

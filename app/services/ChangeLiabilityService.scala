@@ -48,7 +48,10 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
                   val title = ChangeLiabilityUtils.generateTitleFromLiabilityReturn(liabilityReturn)
                   val periodData = ChangeLiabilityUtils.generatePeriodFromLiabilityReturn(liabilityReturn)
                   val changeLiability = PropertyDetails(atedRefNo,
-                    id = createPropertyKey,
+                    id = fromSelectedPrevReturn match {
+                      case Some(true) => createPropertyKey
+                      case _ => oldFormBundleNo
+                    },
                     periodKey = fromSelectedPrevReturn match {
                       case Some(true) => period.get
                       case _ => liabilityReturn.periodKey.trim.toInt
