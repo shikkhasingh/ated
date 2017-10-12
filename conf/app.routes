@@ -1,8 +1,8 @@
 # microservice specific routes
 
 ## Reliefs ##
-GET   /ated/:atedRefNo/ated/reliefs/:periodKey                      controllers.ReliefsController.retrieveDraftReliefs(atedRefNo: String, periodKey: Int)
 POST  /ated/:atedRefNo/ated/reliefs/save                            controllers.ReliefsController.saveDraftReliefs(atedRefNo: String)
+GET   /ated/:atedRefNo/ated/reliefs/:periodKey                      controllers.ReliefsController.retrieveDraftReliefs(atedRefNo: String, periodKey: Int)
 GET   /ated/:atedRefNo/ated/reliefs/submit/:periodKey               controllers.ReliefsController.submitDraftReliefs(atedRefNo: String, periodKey: Int)
 DELETE /ated/:atedRefNo/ated/reliefs/drafts                         controllers.ReliefsController.deleteDraftReliefs(atedRefNo: String)
 DELETE /ated/:atedRefNo/ated/reliefs/drafts/:periodKey              controllers.ReliefsController.deleteDraftReliefsByYear(atedRefNo: String, periodKey: Int)
@@ -19,7 +19,6 @@ POST  /ated/:atedRefNo/property-details/revalued/:id                controllers.
 POST  /ated/:atedRefNo/property-details/owned-before/:id            controllers.PropertyDetailsValuesController.saveDraftPropertyDetailsOwnedBefore(atedRefNo: String, id: String)
 POST  /ated/:atedRefNo/property-details/new-build/:id               controllers.PropertyDetailsValuesController.saveDraftPropertyDetailsNewBuild(atedRefNo: String, id: String)
 POST  /ated/:atedRefNo/property-details/valued/:id                  controllers.PropertyDetailsValuesController.saveDraftPropertyDetailsProfessionallyValued(atedRefNo: String, id: String)
-
 POST  /ated/:atedRefNo/property-details/full-tax-period/:id         controllers.PropertyDetailsPeriodController.saveDraftFullTaxPeriod(atedRefNo: String, id: String)
 POST  /ated/:atedRefNo/property-details/in-relief/:id               controllers.PropertyDetailsPeriodController.saveDraftInRelief(atedRefNo: String, id: String)
 POST  /ated/:atedRefNo/property-details/dates-liable/:id            controllers.PropertyDetailsPeriodController.saveDraftDatesLiable(atedRefNo: String, id: String)
@@ -40,6 +39,7 @@ DELETE      /ated/:atedRefNo/property-details/delete/drafts/:id     controllers.
 ## API 1b ##
 GET   /ated/:atedRefNo/ated/details/:identifier/:identifierType     controllers.DetailsController.getDetails(atedRefNo:String, identifier: String, identifierType: String)
 GET   /agent/:agentCode/ated/details/:identifier/:identifierType    controllers.AgentDetailsController.getDetails(agentCode:String, identifier: String, identifierType: String)
+POST  /ated/:atedRefNo/registration-details/:safeId                 controllers.SubscriptionDataController.updateRegistrationDetails(atedRefNo: String, safeId: String)
 
 ## returns summary ##
 GET   /ated/:atedRefNo/returns/partial-summary                      controllers.ReturnsSummaryController.getPartialSummaryReturn(atedRefNo: String)
@@ -48,7 +48,6 @@ GET   /ated/:atedRefNo/returns/full-summary                         controllers.
 ## subscription ##
 GET   /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.retrieveSubscriptionData(atedRefNo: String)
 POST  /ated/:atedRefNo/subscription-data                            controllers.SubscriptionDataController.updateSubscriptionData(atedRefNo: String)
-POST  /ated/:atedRefNo/registration-details/:safeId                 controllers.SubscriptionDataController.updateRegistrationDetails(atedRefNo: String, safeId: String)
 GET   /agent/:agentCode/ated/subscription-data/:atedRefno           controllers.AgentRetrieveClientSubscriptionDataController.retrieveSubscriptionDataByAgent(atedRefno: String, agentCode: String)
 
 ## form-bundle
