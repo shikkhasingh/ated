@@ -240,13 +240,13 @@ class ReturnSummaryServiceSpec extends PlaySpec with OneServerPerSuite with Mock
         val etmpReturnJson = Json.parse("""{"safeId":"123Safe","organisationName":"organisationName","periodData":[{"periodKey":"2014","returnData":{"reliefReturnSummary":[{"formBundleNumber":"12345","dateOfSubmission":"2014-05-05","relief":"Farmhouses","reliefStartDate":"2014-09-05","reliefEndDate":"2014-10-05"}],"liabilityReturnSummary":[{}]}}],"atedBalance":"0"}""")
         val relDraft = ReliefBuilder.reliefTaxAvoidance(atedRefNo, periodKey)
         val reliefDrafts = Seq(relDraft)
-        val propDetails = PropertyDetails(atedRefNo = "ated-ref-1", "1", periodKey, addressProperty = PropertyDetailsBuilder.getPropertyDetailsAddress(None), calculated = None, formBundleReturn = Some(ChangeLiabilityReturnBuilder.generateFormBundleResponse(periodKey)))
+        val propDetails = PropertyDetails(atedRefNo = "ated-ref-1", "123456789099", periodKey, addressProperty = PropertyDetailsBuilder.getPropertyDetailsAddress(None), calculated = None, formBundleReturn = Some(ChangeLiabilityReturnBuilder.generateFormBundleResponse(periodKey)))
         val propDetailsSeq = Seq(propDetails)
         val dispLiab = Seq(disposeLiability2)
 
         val years = 6
 
-        val expected = SummaryReturnsModel(Some(0), List(PeriodSummaryReturns(periodKey, List(DraftReturns(periodKey, "1", "addr1 addr2", None, "Change_Liability"),
+        val expected = SummaryReturnsModel(Some(0), List(PeriodSummaryReturns(periodKey, List(DraftReturns(periodKey, "123456789099", "addr1 addr2", None, "Change_Liability"),
           DraftReturns(periodKey, "123456789012", "line1 line1", Some(1000), "Dispose_Liability")),
           Some(SubmittedReturns(periodKey, List(SubmittedReliefReturns("12345", "Farmhouses", new LocalDate("2014-09-05"), new LocalDate("2014-10-05"),
             new LocalDate("2014-05-05"), None, None)), List())))))
