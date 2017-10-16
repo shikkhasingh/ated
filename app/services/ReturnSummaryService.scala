@@ -50,7 +50,9 @@ trait ReturnSummaryService {
     val liabilityDraftSeq: Seq[DraftReturns] = liabilityDrafts.map {
       x => DraftReturns(x.periodKey, x.id.toString, x.addressProperty.line_1 + " " + x.addressProperty.line_2,
             x.calculated.fold(None: Option[BigDecimal])(y => y.liabilityAmount),
-            if (x.formBundleReturn.isDefined) TypeChangeLiabilityDraft else TypeLiabilityDraft)
+            if (x.formBundleReturn.isDefined && x.id.size == 12) TypeChangeLiabilityDraft else TypeLiabilityDraft)
+                              // 12 chars is the length of the formBundleNo,
+                              // if it was 10 then it would be a return created from a previous year
     }
 
     val disposeLiabilityDraftsSeq: Seq[DraftReturns] = disposeLiabilityDrafts.map {
