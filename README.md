@@ -33,13 +33,14 @@ where,
 ### usage with request and response
 
 > retrieve the draft relief based on period
-```/ated/ATED1223123/ated/reliefs/2017```
+```GET /ated/ATED1223123/ated/reliefs/2017```
 
 **Response body**
 
 [Relief Response With Status Code](#relief-response-with-status-code)
 
 > saves the draft relief,
+```POST /ated/ATED1223123/ated/reliefs/save```
 
 **Example request with a valid body**
 
@@ -89,6 +90,24 @@ where,
 **Response body**
 
 [Relief Response With Status Code](#relief-response-with-status-code)
+
+> submit the draft return
+```GET /ated/ATED1223123/ated/reliefs/submit/2017```
+
+**Response body**
+
+```json
+{
+	"processingDate": "2001-12-17T09:30:47Z",
+	"liabilityReturnResponse": [{
+		"mode": "Post",
+		"propertyKey": "aaaaaaaaaa",
+		"liabilityAmount": 1234,
+		"paymentReference": "aaaaaaaaaaaaaa",
+		"formBundleNumber": "012345678912"
+	}]
+}
+```
 
 ## Chargeable Return APIs
 
