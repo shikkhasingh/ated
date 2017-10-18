@@ -109,6 +109,20 @@ where,
 }
 ```
 
+> delete draft relief
+```DELETE /ated/ATED1223123/ated/reliefs/drafts``` 
+
+**Response body**
+
+[Relief Response With Status Code](#relief-response-with-status-code)
+
+> delete draft relief
+```DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
+
+**Response body**
+
+[Relief Response With Status Code](#relief-response-with-status-code)
+
 ## Chargeable Return APIs
 
 APIs for creating a chargeable return
