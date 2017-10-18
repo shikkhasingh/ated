@@ -37,7 +37,7 @@ where,
 
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
 
 > saves the draft relief,
 ```POST /ated/ATED1223123/ated/reliefs/save```
@@ -89,7 +89,7 @@ where,
 ```
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
 
 > submit the draft return
 ```GET /ated/ATED1223123/ated/reliefs/submit/2017```
@@ -114,14 +114,14 @@ where,
 
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
 
-> delete draft relief
+> delete draft relief by year
 ```DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
 
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
 
 ## Chargeable Return APIs
 
@@ -398,16 +398,7 @@ where,
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
 
-#### Relief Response With Status Code
-
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 400   | Bad Request |
-| 404   | Not Found   |
-| 500   | Internal Server Error |
-| 503   | Service Unavailable |
+#### Relief Response
 
 ```json
  [{
