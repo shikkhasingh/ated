@@ -69,11 +69,11 @@ object PropertyDetailsBuilder  extends PlaySpec with OneServerPerSuite  {
   }
 
   def getPropertyDetailsTitle(): Option[PropertyDetailsTitle] = {
-    Some(new PropertyDetailsTitle("titleNo"))
+    Some(PropertyDetailsTitle("titleNo"))
   }
 
   def getPropertyDetailsAddress(postCode: Option[String] = None): PropertyDetailsAddress = {
-    new PropertyDetailsAddress("addr1", "addr2", Some("addr3"), Some("addr4"), postCode)
+    PropertyDetailsAddress("addr1", "addr2", Some("addr3"), Some("addr4"), postCode)
   }
 
   def getPropertyDetailsCalculated(liabilityAmount: Option[BigDecimal] = None): Option[PropertyDetailsCalculated] = {
