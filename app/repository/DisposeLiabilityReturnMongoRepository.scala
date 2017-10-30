@@ -63,6 +63,8 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[DisposeLiabilityReturn, BSONObjectID]("disposeLiabilityReturns", mongo, DisposeLiabilityReturn.formats, ReactiveMongoFormats.objectIdFormats)
     with DisposeLiabilityReturnMongoRepository {
 
+  collection.drop()
+
   val metrics: Metrics = Metrics
 
   override def indexes: Seq[Index] = {
@@ -103,7 +105,7 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
     }
     result
   }
-
+  // $COVERAGE-OFF$
   def deleteDisposeLiabilityReturns(atedRefNo: String): Future[DisposeLiabilityReturnDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeleteDispLiability)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -113,12 +115,13 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
         case _ => DisposeLiabilityReturnDeleteError
       }
     }.recover {
-      // $COVERAGE-OFF$
+
       case e => Logger.warn("Failed to remove draft dispose liability", e)
         timerContext.stop()
         DisposeLiabilityReturnDeleteError
-      // $COVERAGE-ON$
+
     }
   }
+  // $COVERAGE-ON$
 
 }
