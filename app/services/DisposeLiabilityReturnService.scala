@@ -50,7 +50,6 @@ trait DisposeLiabilityReturnService extends NotificationService {
     }
   }
 
-
   def retrieveAndCacheDisposeLiabilityReturn(atedRefNo: String, oldFormBundleNo: String)(implicit hc: HeaderCarrier): Future[Option[DisposeLiabilityReturn]] = {
     for {
       cachedData <- retrieveDraftDisposeLiabilityReturn(atedRefNo, oldFormBundleNo)
