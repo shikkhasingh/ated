@@ -65,6 +65,8 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[ReliefsTaxAvoidance, BSONObjectID]("reliefs", mongo, ReliefsTaxAvoidance.formats, ReactiveMongoFormats.objectIdFormats)
     with ReliefsMongoRepository {
 
+  collection.drop(failIfNotFound = true)
+
   val metrics: Metrics = Metrics
 
   override def indexes: Seq[Index] = {
@@ -75,7 +77,7 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
       Index(Seq("timestamp" -> IndexType.Ascending), Some("reliefDraftExpiry"), options = BSONDocument("expireAfterSeconds" -> 60 * 60 * 24 * 28), sparse = true, background = true)
     )
   }
-
+  // $COVERAGE-OFF$
   def cacheRelief(relief: ReliefsTaxAvoidance): Future[ReliefCached] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryInsertRelief)
     val query = BSONDocument("periodKey" -> relief.periodKey, "atedRefNo" -> relief.atedRefNo)
@@ -93,7 +95,9 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
       // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def fetchReliefs(atedRefNo: String): Future[Seq[ReliefsTaxAvoidance]] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryFetchRelief)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -103,7 +107,9 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
     }
     result
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def deleteReliefs(atedRefNo: String): Future[ReliefDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeleteRelief)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -121,7 +127,9 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
       // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def deleteDraftReliefByYear(atedRefNo: String, periodKey: Int):Future[ReliefDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeleteReliefByYear)
     val query = BSONDocument("atedRefNo" -> atedRefNo, "periodKey" -> periodKey)
@@ -139,5 +147,6 @@ class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
       // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
 
 }

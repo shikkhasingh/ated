@@ -63,7 +63,7 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[DisposeLiabilityReturn, BSONObjectID]("disposeLiabilityReturns", mongo, DisposeLiabilityReturn.formats, ReactiveMongoFormats.objectIdFormats)
     with DisposeLiabilityReturnMongoRepository {
 
-  collection.drop()
+  collection.drop(failIfNotFound = true)
 
   val metrics: Metrics = Metrics
 
@@ -76,6 +76,7 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
     )
   }
 
+  // $COVERAGE-OFF$
   def cacheDisposeLiabilityReturns(disposeLiabilityReturn: DisposeLiabilityReturn): Future[DisposeLiabilityReturnCache] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryInsertDispLiability)
     val query = BSONDocument("atedRefNo" -> disposeLiabilityReturn.atedRefNo, "id" -> disposeLiabilityReturn.id)
@@ -93,7 +94,9 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
       // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def fetchDisposeLiabilityReturns(atedRefNo: String): Future[Seq[DisposeLiabilityReturn]] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryFetchDispLiability)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -105,6 +108,7 @@ class DisposeLiabilityReturnReactiveMongoRepository(implicit mongo: () => DB)
     }
     result
   }
+  // $COVERAGE-ON$
   // $COVERAGE-OFF$
   def deleteDisposeLiabilityReturns(atedRefNo: String): Future[DisposeLiabilityReturnDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeleteDispLiability)

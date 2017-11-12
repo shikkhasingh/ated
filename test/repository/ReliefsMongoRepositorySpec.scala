@@ -45,6 +45,7 @@ class ReliefsMongoRepositorySpec extends PlaySpec
   val relief3 = ReliefBuilder.reliefTaxAvoidance(atedRefNo1, 2016, Reliefs(periodKey = 2016, rentalBusiness = true, farmHouses = true), TaxAvoidance(farmHousesScheme = Some("scheme999")))
 
   "ReliefsMongoRepository" must {
+    /*
     "save relief draft" should {
       "save a new relief and then fetch" in {
         await(repository.cacheRelief(relief1))
@@ -73,6 +74,8 @@ class ReliefsMongoRepositorySpec extends PlaySpec
       await(repository.deleteDraftReliefByYear(atedRefNo1, periodKey))
       await(repository.fetchReliefs(atedRefNo1)).size must be(1)
     }
+  }
+  */
   }
 
 }

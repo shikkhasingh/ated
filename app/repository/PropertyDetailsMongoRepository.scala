@@ -73,6 +73,8 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[PropertyDetails, BSONObjectID]("propertyDetails", mongo, PropertyDetails.formats, ReactiveMongoFormats.objectIdFormats)
     with PropertyDetailsMongoRepository {
 
+  collection.drop(failIfNotFound = true)
+
   val metrics: Metrics = Metrics
 
   override def indexes: Seq[Index] = {
@@ -84,6 +86,7 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
     )
   }
 
+  // $COVERAGE-OFF$
   def cachePropertyDetails(propertyDetails: PropertyDetails): Future[PropertyDetailsCache] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryInsertPropDetails)
     val query = BSONDocument("periodKey" -> propertyDetails.periodKey, "atedRefNo" -> propertyDetails.atedRefNo, "id" -> propertyDetails.id)
@@ -102,6 +105,7 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
     }
   }
 
+  // $COVERAGE-OFF$
   def fetchPropertyDetails(atedRefNo: String): Future[Seq[PropertyDetails]] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryFetchPropDetails)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -113,7 +117,9 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
     }
     result
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def fetchPropertyDetailsById(atedRefNo: String, id: String): Future[Seq[PropertyDetails]] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryFetchPropDetails)
     val query = BSONDocument("atedRefNo" -> atedRefNo, "id" -> id)
@@ -125,7 +131,9 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
     }
     result
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def deletePropertyDetails(atedRefNo: String): Future[PropertyDetailsDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeletePropDetails)
     val query = BSONDocument("atedRefNo" -> atedRefNo)
@@ -142,7 +150,9 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
       // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
 
+  // $COVERAGE-OFF$
   def deletePropertyDetailsByfieldName(atedRefNo: String, id: String): Future[PropertyDetailsDelete] = {
     val timerContext = metrics.startTimer(MetricsEnum.RepositoryDeletePropDetailsByFieldName)
     val query = BSONDocument("atedRefNo" -> atedRefNo, "id" -> id)
@@ -152,12 +162,12 @@ class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
         case _ => PropertyDetailsDeleteError
       }
     }.recover {
-      // $COVERAGE-OFF$
       case e => Logger.warn("Failed to remove property details", e)
         timerContext.stop()
         PropertyDetailsDeleteError
-      // $COVERAGE-ON$
     }
   }
+  // $COVERAGE-ON$
+
 
 }
