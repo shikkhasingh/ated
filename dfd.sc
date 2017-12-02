@@ -1,8 +1,6 @@
-import models._
+import models.EditLiabilityReturnsResponseModel
+import org.joda.time.DateTime
 import play.api.libs.json.Json
 
-val x = IsFullTaxPeriod(isFullPeriod = false, datesLiable = None)
-val addressDetails = AddressDetails("Correspondence", "line1", "line2", None, None, Some("postCode"), "GB")
-val updatedData = UpdateSubscriptionDataRequest(true, ChangeIndicators(), List(Address(addressDetails = addressDetails)))
-
-Json.prettyPrint(Json.toJson(updatedData))
+val x =  EditLiabilityReturnsResponseModel(DateTime.now(), liabilityReturnResponse = Seq(), accountBalance = BigDecimal(0.00))
+Json.prettyPrint(Json.toJson(x))

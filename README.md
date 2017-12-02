@@ -298,6 +298,26 @@ where,
 
 ### Usage with request and response
 
+#### GET /ated/:atedRefNo/subscription-data
+
+> retrieve subscription data for client
+
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
+#### GET /agent/:agentCode/ated/subscription-data/:atedRefno
+
+> retrieve subscription data for agent
+
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
 #### POST /ated/:atedRefNo/subscription-data
 
 > update subscription data for client
@@ -390,16 +410,563 @@ where,
 
 ## Summary return APIs
 
+### APIs for retrieving summary returns
+
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/returns/partial-summary``` | GET | retrieve partial-summary submitted return details based on form-bundle number |
 | ```/ated/:atedRefNo/returns/full-summary``` | GET | retrieve full-summary submitted return details based on form-bundle number |
 
+### Usage with request and response
+
+#### GET /ated/:atedRefNo/returns/partial-summary
+
+> retrieve partial-summary submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "safeId": "XA0001234567899",
+  "organisationName": "Mark William LLP",
+  "periodData": [
+    {
+      "periodKey": "2016",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789021",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          },
+          {
+            "formBundleNumber": "123456789022",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Property rental businesses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "",
+            "taxAvoidancePromoterReference": ""
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789019",
+                    "dateOfSubmission": "2016-05-01",
+                    "dateFrom": "2016-05-01",
+                    "dateTo": "2017-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789020",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789023",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2015",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789010",
+            "dateOfSubmission": "2013-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2015-04-01",
+            "reliefEndDate": "2016-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789011",
+                    "dateOfSubmission": "2012-01-01",
+                    "dateFrom": "2015-04-01",
+                    "dateTo": "2016-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789012",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789024",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2014",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789013",
+            "dateOfSubmission": "2013-09-25",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2014-04-01",
+            "reliefEndDate": "2015-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Lodge Lane",
+                "addressLine2": "Liverpool",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789014",
+                    "dateOfSubmission": "2013-03-03",
+                    "dateFrom": "2014-04-01",
+                    "dateTo": "2015-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2013",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "Campden House Terrace",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789015",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2014-02-01",
+                    "liabilityAmount": "300.33",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789016",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2014-03-01",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              },
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Montpelier Square",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789017",
+                    "dateOfSubmission": "2012-04-11",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2013-11-22",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789018",
+                    "dateOfSubmission": "2012-10-04",
+                    "dateFrom": "2013-11-23",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "20  ",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "                    ",
+                "addressLine1": " ",
+                "addressLine2": " ",
+                "return": [
+                  {
+                    "formBundleNumber": "075000000164",
+                    "dateOfSubmission": "2017-03-08",
+                    "dateFrom": "2016-04-01",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": 0,
+                    "paymentReference": "XD002610105369",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "atedBalance": "100.50"
+}
+
+```
+#### GET /ated/:atedRefNo/returns/full-summary
+
+> retrieve full-summary submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "safeId": "XA0001234567899",
+  "organisationName": "Mark William LLP",
+  "periodData": [
+    {
+      "periodKey": "2016",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789021",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          },
+          {
+            "formBundleNumber": "123456789022",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Property rental businesses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "",
+            "taxAvoidancePromoterReference": ""
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789019",
+                    "dateOfSubmission": "2016-05-01",
+                    "dateFrom": "2016-05-01",
+                    "dateTo": "2017-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789020",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789023",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2015",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789010",
+            "dateOfSubmission": "2013-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2015-04-01",
+            "reliefEndDate": "2016-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789011",
+                    "dateOfSubmission": "2012-01-01",
+                    "dateFrom": "2015-04-01",
+                    "dateTo": "2016-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789012",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789024",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2014",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789013",
+            "dateOfSubmission": "2013-09-25",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2014-04-01",
+            "reliefEndDate": "2015-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Lodge Lane",
+                "addressLine2": "Liverpool",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789014",
+                    "dateOfSubmission": "2013-03-03",
+                    "dateFrom": "2014-04-01",
+                    "dateTo": "2015-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2013",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "Campden House Terrace",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789015",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2014-02-01",
+                    "liabilityAmount": "300.33",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789016",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2014-03-01",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              },
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Montpelier Square",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789017",
+                    "dateOfSubmission": "2012-04-11",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2013-11-22",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789018",
+                    "dateOfSubmission": "2012-10-04",
+                    "dateFrom": "2013-11-23",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "20  ",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "                    ",
+                "addressLine1": " ",
+                "addressLine2": " ",
+                "return": [
+                  {
+                    "formBundleNumber": "075000000164",
+                    "dateOfSubmission": "2017-03-08",
+                    "dateFrom": "2016-04-01",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": 0,
+                    "paymentReference": "XD002610105369",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "atedBalance": "100.50"
+}
+
+```
+
 ## Edit submitted Chargeable Return APIs
 
 ## Change submitted chargeable return APIs
 
-APIs for changing an already submitted return based on old form-bundle number
+### APIs for changing an already submitted return based on old form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -416,9 +983,88 @@ where,
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
 
+### Usage with request and response
+
+#### GET /ated/:ated/liability-return/:oldFBNo
+
+> retrieve chargeable return with old form bundle number for change
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### GET /ated/:ated/prev-liability-return/:oldFBNo/:period
+
+> retrive chargeable return with old form bundle number and period
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/update-has-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+ ```
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/update-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+ ```
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### GET /ated/:ated/liability-return/calculate/:oldFBNo
+
+> calculate the edited chargeable return
+
+**Response body**
+```json
+{
+  "processingDate" : "2017-12-02T18:45:34Z",
+  "liabilityReturnResponse" : [ ],
+  "accountBalance" : 0
+}
+
+```
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/submit
+
+**Response body with status code**
+```json
+{
+  "processingDate" : "2017-12-02T18:45:34Z",
+  "liabilityReturnResponse" : [ ],
+  "accountBalance" : 0
+}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+
 ## Dispose submitted chargeable return APIs
 
-APIs for disposing an already submitted return based on old form-bundle number
+### APIs for disposing an already submitted return based on old form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -483,7 +1129,85 @@ where,
 
 #### Property Details Response With Status Code
 
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
 
+```json
+{
+  "atedRefNo" : "ated-ref-123",
+  "id" : "123456789012",
+  "periodKey" : 2015,
+  "addressProperty" : {
+    "line_1" : "addr1",
+    "line_2" : "addr2",
+    "line_3" : "addr3",
+    "line_4" : "addr4"
+  },
+  "title" : {
+    "titleNumber" : "titleNo"
+  },
+  "value" : {
+    "anAcquisition" : true,
+    "isPropertyRevalued" : true,
+    "revaluedValue" : 1111.11,
+    "revaluedDate" : "1970-01-01",
+    "isOwnedBefore2012" : true,
+    "ownedBefore2012Value" : 1111.11,
+    "isNewBuild" : true,
+    "newBuildValue" : 1111.11,
+    "newBuildDate" : "1970-01-01",
+    "notNewBuildValue" : 1111.11,
+    "notNewBuildDate" : "1970-01-01",
+    "isValuedByAgent" : true
+  },
+  "period" : {
+    "isFullPeriod" : false,
+    "isTaxAvoidance" : true,
+    "taxAvoidanceScheme" : "taxAvoidanceScheme",
+    "taxAvoidancePromoterReference" : "taxAvoidancePromoterReference",
+    "supportingInfo" : "supportingInfo",
+    "isInRelief" : true,
+    "liabilityPeriods" : [ {
+      "lineItemType" : "Liability",
+      "startDate" : "2015-04-01",
+      "endDate" : "2015-08-31"
+    } ],
+    "reliefPeriods" : [ {
+      "lineItemType" : "Relief",
+      "startDate" : "2015-09-01",
+      "endDate" : "2016-03-31",
+      "description" : "Relief"
+    } ]
+  },
+  "calculated" : {
+    "valuationDateToUse" : "1970-01-01",
+    "professionalValuation" : true,
+    "liabilityPeriods" : [ {
+      "value" : 1111.11,
+      "startDate" : "2015-04-01",
+      "endDate" : "2015-08-31",
+      "lineItemType" : "Liability"
+    } ],
+    "reliefPeriods" : [ {
+      "value" : 1111.11,
+      "startDate" : "2015-09-01",
+      "endDate" : "2016-03-31",
+      "lineItemType" : "Relief",
+      "description" : "Relief"
+    } ],
+    "timeStamp" : 1512238927440
+  },
+  "timeStamp" : {
+    "$date" : 1512238927440
+  }
+}
+
+```
 
 #### Response With Status Code
 
