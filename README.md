@@ -239,7 +239,7 @@ No body
 
 ## Client and Agent Registration Details APIs
 
-APIs for registering clients/agents 
+### APIs for registering clients/agents 
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -255,6 +255,10 @@ where,
 | identifierType | arn or safeId or utr |
 | identifier | the number for the above types |
 | agentCode | agent code |
+
+### Usage with request and response
+
+#### POST /ated/:atedRefNo/registration-details/:safeId
 
 > update ATED client registration details
 
@@ -283,6 +287,8 @@ where,
 
 ## Client and Agent Subscription Details APIs
 
+### APIs for registering clients/agents 
+
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/subscription-data ``` | GET | retrieve subscription data for client |
@@ -290,9 +296,43 @@ where,
 | ```/agent/:agentCode/ated/subscription-data/:atedRefno``` | GET | retrieve subscription data for agent |
 
 
+### Usage with request and response
+
+#### POST /ated/:atedRefNo/subscription-data
+
+> update subscription data for client
+
+**Example request with a valid body**
+
+```json
+{
+  "emailConsent" : true,
+  "changeIndicators" : {
+    "nameChanged" : false,
+    "permanentPlaceOfBusinessChanged" : false,
+    "correspondenceChanged" : false,
+    "contactDetailsChanged" : false
+  },
+  "address" : [ {
+    "addressDetails" : {
+      "addressType" : "Correspondence",
+      "addressLine1" : "line1",
+      "addressLine2" : "line2",
+      "postalCode" : "postCode",
+      "countryCode" : "GB"
+    }
+  } ]
+}
+```
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
 ## Form-bundle return API
 
-APIs for retrieving return based on form-bundle number
+### APIs for retrieving return based on form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -304,7 +344,51 @@ where,
 |------|-------------------|
 | formBundleNumber | return submission identifier from ETMP |
 
-### Summary return APIs
+### Usage with request and response
+
+#### GET /ated/:atedRefNo/returns/form-bundle/:formBundleNumber
+
+> retrieve submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "periodKey": "2015",
+  "propertyDetails": {
+    "titleNumber": "CS72532",
+    "address": {
+      "addressLine1": "1 Whitehall Place",
+      "addressLine2": "Virginia Water",
+      "addressLine3": "Surrey",
+      "postalCode": "GU254DG",
+      "countryCode": "GB"
+    },
+    "additionalDetails": "additional additional"
+  },
+  "dateOfAcquisition": "2011-05-26",
+  "valueAtAcquisition": 727000,
+  "dateOfValuation": "2012-02-09",
+  "taxAvoidanceScheme": "56485952",
+  "taxAvoidancePromoterReference": "56485953",
+  "ninetyDayRuleApplies": true,
+  "professionalValuation": true,
+  "localAuthorityCode": "1234",
+  "dateOfSubmission": "2016-05-10",
+  "liabilityAmount": 9375.12,
+  "paymentReference": "abc456def123gh",
+  "lineItem": [
+    {
+      "propertyValue": 727000,
+      "dateFrom": "2015-04-01",
+      "dateTo": "2016-01-01",
+      "type": "Relief",
+      "reliefDescription": "Property developers"
+    }
+  ]
+}
+```
+
+## Summary return APIs
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
