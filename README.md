@@ -12,7 +12,7 @@ The APIs listed below are invoked for different operations from the frontend mic
 
 ## Relief Return APIs
 
-APIs for creating a relief return
+### List of APIs
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -32,8 +32,9 @@ where,
 
 ### usage with request and response
 
+#### GET /ated/ATED1223123/ated/reliefs/2017```
+
 > retrieve the draft relief based on period
-```GET /ated/ATED1223123/ated/reliefs/2017```
 
 | Status | Message     |
 |-------|-------------|
@@ -44,8 +45,9 @@ where,
 
 [Relief Response](#relief-response)
 
+#### POST /ated/ATED1223123/ated/reliefs/save```
+
 > saves the draft relief
-```POST /ated/ATED1223123/ated/reliefs/save```
 
 | Status | Message     |
 |-------|-------------|
@@ -100,8 +102,9 @@ where,
 
 [Relief Response](#relief-response)
 
+####GET /ated/ATED1223123/ated/reliefs/submit/2017```
+
 > submit the draft return
-```GET /ated/ATED1223123/ated/reliefs/submit/2017```
 
 | Status | Message     |
 |-------|-------------|
@@ -126,8 +129,9 @@ where,
 }
 ```
 
+####DELETE /ated/ATED1223123/ated/reliefs/drafts```
+ 
 > delete draft relief
-```DELETE /ated/ATED1223123/ated/reliefs/drafts``` 
 
 | Status | Message     |
 |-------|-------------|
@@ -138,8 +142,9 @@ where,
 
 [Relief Response](#relief-response)
 
+####DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
+
 > delete draft relief by year
-```DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
 
 | Status | Message     |
 |-------|-------------|
@@ -154,7 +159,7 @@ where,
 
 ## Chargeable Return APIs
 
-APIs for creating a chargeable return
+###List of APIs
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -189,6 +194,8 @@ where,
 | atedRefNo | unique identfier for clients subscribed to ATED |
 
 ### usage with request and response
+
+####POST /ated/:atedRefNo/property-details/create/:periodKey
 
 > create the draft chargeable property
 
