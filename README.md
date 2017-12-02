@@ -182,7 +182,6 @@ where,
 | ```/ated/:atedRefNo/property-details/calculate/:id``` | GET | calculate the draft chargeable property for mode = Pre-Calculation |
 | ```/ated/:atedRefNo/property-details/submit/:id``` | POST | submit the draft chargeable property for mode = Post |
 
-
 where,
 
 | parameters | description |
@@ -390,6 +389,23 @@ No body
 #### POST /ated/:atedRefNo/property-details/dates-liable/:id
 
 > update the draft chargeable property with dates liable
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/submit/:id
+
+> submit the draft chargeable property for mode = Post
+
+**Response body**
+```json
+{"processingDate": "2001-12-17T09:30:47Z", "atedRefNumber": "ABCDEabcde12345", "formBundleNumber": "123456789012345"}
+```
+
+#### GET /ated/:atedRefNo/property-details/calculate/:id`
+
+> calculate the draft chargeable property for mode = Pre-Calculation
 
 **Response body**
 
