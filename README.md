@@ -10,9 +10,150 @@ All data received is validated against the relevant schema to ensure correct for
 
 The APIs listed below are invoked for different operations from the frontend micro service. They are grouped according to the functionality.
 
-========================================
+## Relief Return APIs
 
-========================================
+### List of APIs
+
+| PATH | Supported Methods | Description |
+|------|-------------------|-------------|
+|```/ated/:atedRefNo/ated/reliefs/save``` | POST | saves the draft relief |
+| ```/ated/:atedRefNo/ated/reliefs/:periodKey``` | GET | retrieve the draft relief based on period |
+|```/ated/:atedRefNo/ated/reliefs/submit/:periodKey``` | GET | submit the draft return |
+|```/ated/:atedRefNo/ated/reliefs/drafts``` | DELETE | delete the draft relief |
+|```/ated/:atedRefNo/ated/reliefs/drafts/:periodKey``` | DELETE | delete the draft relief by year |
+
+where,
+
+| parameters | description |
+|------|-------------------|
+| periodKey | starting year of tax year (e.g. 2016 for '16-'17) |
+| atedRefNo | unique identfier for clients subscribed to ATED |
+
+
+### Usage with request and response
+
+#### GET /ated/ATED1223123/ated/reliefs/2017```
+
+> retrieve the draft relief based on period
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+**Response body**
+
+[Relief Response](#relief-response)
+
+#### POST /ated/ATED1223123/ated/reliefs/save```
+
+> saves the draft relief
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+
+**Example request with a valid body**
+
+```json
+{
+	"atedRefNo": "ATED1223123",
+	"periodKey": 2017,
+	"reliefs": {
+		"periodKey": 2017,
+		"rentalBusiness": false,
+		"openToPublic": false,
+		"propertyDeveloper": false,
+		"propertyTrading": false,
+		"lending": false,
+		"employeeOccupation": false,
+		"farmHouses": false,
+		"socialHousing": false,
+		"equityRelease": false
+	},
+	"taxAvoidance": {
+		"rentalBusinessScheme": "Scheme1",
+		"rentalBusinessSchemePromoter": "Promoter1",
+		"openToPublicScheme": "Scheme2",
+		"openToPublicSchemePromoter": "Scheme2",
+		"propertyDeveloperScheme": "Scheme3",
+		"propertyDeveloperSchemePromoter": "Scheme3",
+		"propertyTradingScheme": "Scheme4",
+		"propertyTradingSchemePromoter": "Promoter4",
+		"lendingScheme": "Scheme5",
+		"lendingSchemePromoter": "Promoter5",
+		"employeeOccupationScheme": "Scheme6",
+		"employeeOccupationSchemePromoter": "Promoter6",
+		"farmHousesScheme": "Scheme7",
+		"farmHousesSchemePromoter": "Promoter7",
+		"socialHousingScheme": "Scheme8",
+		"socialHousingSchemePromoter": "Promoter8",
+		"equityReleaseScheme": "Scheme9",
+		"equityReleaseSchemePromoter": "Promoter9"
+	},
+	"periodStartDate": "2017-04-01",
+	"periodEndDate": "2018-03-31",
+	"timeStamp": {
+		"$date": 1508239198714
+	}
+}
+```
+**Response body**
+
+[Relief Response](#relief-response)
+
+#### GET /ated/ATED1223123/ated/reliefs/submit/2017```
+
+> submit the draft return
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
+
+**Response body**
+
+```json
+{
+	"processingDate": "2001-12-17T09:30:47Z",
+	"liabilityReturnResponse": [{
+		"mode": "Post",
+		"propertyKey": "aaaaaaaaaa",
+		"liabilityAmount": 1234,
+		"paymentReference": "aaaaaaaaaaaaaa",
+		"formBundleNumber": "012345678912"
+	}]
+}
+```
+
+#### DELETE /ated/ATED1223123/ated/reliefs/drafts```
+ 
+> delete draft relief
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+**Response body**
+
+[Relief Response](#relief-response)
+
+#### DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
+
+> delete draft relief by year
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+**Response body**
+
+[Relief Response](#relief-response)
 
 ## Chargeable Return APIs
 
@@ -21,27 +162,26 @@ The APIs listed below are invoked for different operations from the frontend mic
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/property-details/create/:periodKey``` | POST | create the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/address/:id``` | POST | update the draft chargeable property with address ** |
-| ```/ated/:atedRefNo/property-details/title/:id``` | POST | update the draft chargeable property with title ** |
+| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |update the draft chargeable property with in relief details
+| ```/ated/:atedRefNo/property-details/address/:id``` | POST | update the draft chargeable property with address  |
+| ```/ated/:atedRefNo/property-details/title/:id``` | POST | update the draft chargeable property with title  |
 | ```/ated/:atedRefNo/property-details/has-value-change/:id``` | POST | update the draft chargeable property with change in value |
 | ```/ated/:atedRefNo/property-details/acquisition/:id``` | POST | update the draft chargeable property with acquisition details |
-| ```/ated/:atedRefNo/property-details/revalued/:id``` | POST | update the draft chargeable property with revalued details ** |
+| ```/ated/:atedRefNo/property-details/revalued/:id``` | POST | update the draft chargeable property with revalued details  |
 | ```/ated/:atedRefNo/property-details/owned-before/:id``` | POST | update the draft chargeable property with owned-before details | 
-| ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details ** |
+| ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details  |
 | ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details |
 | ```/ated/:atedRefNo/property-details/full-tax-period/:id``` | POST | update the draft chargeable property for full tax period |  
-| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details |
+| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details | ++
 | ```/ated/:atedRefNo/property-details/dates-liable/:id``` | POST | update the draft chargeable property with dates liable |
 | ```/ated/:atedRefNo/property-details/dates-liable/add/:id``` | POST | add liable dates in the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/dates-in-relief/add/:id``` | POST | add in relief dates in the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/period/delete/:id``` | POST | delete a period in the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/tax-avoidance/:id``` | POST | update the draft chargeable property with tax-avoidance ** |
-| ```/ated/:atedRefNo/property-details/supporting-info/:id``` | POST | update the draft chargeable property with supporting-info ** |
+| ```/ated/:atedRefNo/property-details/tax-avoidance/:id``` | POST | update the draft chargeable property with tax-avoidance  |
+| ```/ated/:atedRefNo/property-details/supporting-info/:id``` | POST | update the draft chargeable property with supporting-info  |
 | ```/ated/:atedRefNo/property-details/calculate/:id``` | GET | calculate the draft chargeable property for mode = Pre-Calculation |
 | ```/ated/:atedRefNo/property-details/submit/:id``` | POST | submit the draft chargeable property for mode = Post |
 
-** - Example request/response provided below
 
 where,
 
@@ -195,6 +335,8 @@ No body
 
 [Response With Status Code](#response-with-status-code)
 
+#### POST ated/:atedRefNo/property-details/owned-before/:id 
+
 > update the draft chargeable property with owned-before details
 
 **Example request with a valid body**
@@ -236,6 +378,22 @@ No body
 **Response body**
 
 No body
+
+#### POST /ated/:atedRefNo/property-details/in-relief/:id
+
+> update the draft chargeable property with in relief details
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/dates-liable/:id
+
+> update the draft chargeable property with dates liable
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
 
 ## Client and Agent Registration Details APIs
 
@@ -282,7 +440,23 @@ where,
 ```
 **Response body**
 
-[Response With Status Code](#response-with-status-code)
+[Agent Client Registration Response With Status Code](#gent-client-registration-response-with-status-code)
+
+#### GET /agent/:agentCode/ated/details/:identifier/:identifierType
+
+> retrieve agent registration details
+
+**Response body**
+
+[Agent Client Registration Response With Status Code](#agent-client-registration-response-with-status-code)
+
+#### GET /agent/:agentCode/ated/details/:identifier/:identifierType
+
+> retrieve ATED client registration details
+
+**Response body**
+
+[Agent Client Registration Response With Status Code](#gent-client-registration-response-with-status-code)
 
 
 ## Client and Agent Subscription Details APIs
@@ -962,6 +1136,7 @@ where,
 
 ```
 
+
 ## Edit submitted Chargeable Return APIs
 
 ## Change submitted chargeable return APIs
@@ -1542,6 +1717,25 @@ where,
 }
 
 ```
+
+#### Agent Client Registration Response With Status Code
+
+For agents,
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
+For clients,
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909"}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
 
 #### Response With Status Code
 
