@@ -461,7 +461,7 @@ where,
 
 ## Client and Agent Subscription Details APIs
 
-### APIs for registering clients/agents 
+### APIs for subscribing clients/agents 
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -1137,7 +1137,7 @@ where,
 ```
 
 
-## Edit submitted Chargeable Return APIs
+## Edit submitted Chargeable Return APIs:
 
 ## Change submitted chargeable return APIs
 
