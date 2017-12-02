@@ -10,156 +10,13 @@ All data received is validated against the relevant schema to ensure correct for
 
 The APIs listed below are invoked for different operations from the frontend micro service. They are grouped according to the functionality.
 
-## Relief Return APIs
+========================================
 
-### List of APIs
-
-| PATH | Supported Methods | Description |
-|------|-------------------|-------------|
-|```/ated/:atedRefNo/ated/reliefs/save``` | POST | saves the draft relief |
-| ```/ated/:atedRefNo/ated/reliefs/:periodKey``` | GET | retrieve the draft relief based on period |
-|```/ated/:atedRefNo/ated/reliefs/submit/:periodKey``` | GET | submit the draft return |
-|```/ated/:atedRefNo/ated/reliefs/drafts``` | DELETE | delete the draft relief |
-|```/ated/:atedRefNo/ated/reliefs/drafts/:periodKey``` | DELETE | delete the draft relief by year |
-
-where,
-
-| parameters | description |
-|------|-------------------|
-| periodKey | starting year of tax year (e.g. 2016 for '16-'17) |
-| atedRefNo | unique identfier for clients subscribed to ATED |
-
-
-### usage with request and response
-
-#### GET /ated/ATED1223123/ated/reliefs/2017```
-
-> retrieve the draft relief based on period
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 404   | Not Found   |
-
-**Response body**
-
-[Relief Response](#relief-response)
-
-#### POST /ated/ATED1223123/ated/reliefs/save```
-
-> saves the draft relief
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-
-**Example request with a valid body**
-
-```json
-{
-	"atedRefNo": "ATED1223123",
-	"periodKey": 2017,
-	"reliefs": {
-		"periodKey": 2017,
-		"rentalBusiness": false,
-		"openToPublic": false,
-		"propertyDeveloper": false,
-		"propertyTrading": false,
-		"lending": false,
-		"employeeOccupation": false,
-		"farmHouses": false,
-		"socialHousing": false,
-		"equityRelease": false
-	},
-	"taxAvoidance": {
-		"rentalBusinessScheme": "Scheme1",
-		"rentalBusinessSchemePromoter": "Promoter1",
-		"openToPublicScheme": "Scheme2",
-		"openToPublicSchemePromoter": "Scheme2",
-		"propertyDeveloperScheme": "Scheme3",
-		"propertyDeveloperSchemePromoter": "Scheme3",
-		"propertyTradingScheme": "Scheme4",
-		"propertyTradingSchemePromoter": "Promoter4",
-		"lendingScheme": "Scheme5",
-		"lendingSchemePromoter": "Promoter5",
-		"employeeOccupationScheme": "Scheme6",
-		"employeeOccupationSchemePromoter": "Promoter6",
-		"farmHousesScheme": "Scheme7",
-		"farmHousesSchemePromoter": "Promoter7",
-		"socialHousingScheme": "Scheme8",
-		"socialHousingSchemePromoter": "Promoter8",
-		"equityReleaseScheme": "Scheme9",
-		"equityReleaseSchemePromoter": "Promoter9"
-	},
-	"periodStartDate": "2017-04-01",
-	"periodEndDate": "2018-03-31",
-	"timeStamp": {
-		"$date": 1508239198714
-	}
-}
-```
-**Response body**
-
-[Relief Response](#relief-response)
-
-####GET /ated/ATED1223123/ated/reliefs/submit/2017```
-
-> submit the draft return
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 400   | Bad Request |
-| 404   | Not Found   |
-| 500   | Internal Server Error |
-| 503   | Service Unavailable |
-
-**Response body**
-
-```json
-{
-	"processingDate": "2001-12-17T09:30:47Z",
-	"liabilityReturnResponse": [{
-		"mode": "Post",
-		"propertyKey": "aaaaaaaaaa",
-		"liabilityAmount": 1234,
-		"paymentReference": "aaaaaaaaaaaaaa",
-		"formBundleNumber": "012345678912"
-	}]
-}
-```
-
-####DELETE /ated/ATED1223123/ated/reliefs/drafts```
- 
-> delete draft relief
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 500   | Internal Server Error |
-
-**Response body**
-
-[Relief Response](#relief-response)
-
-####DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
-
-> delete draft relief by year
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 500   | Internal Server Error |
-
-**Response body**
-
-[Relief Response](#relief-response)
-
-
+========================================
 
 ## Chargeable Return APIs
 
-###List of APIs
+### List of APIs
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -170,9 +27,9 @@ where,
 | ```/ated/:atedRefNo/property-details/has-value-change/:id``` | POST | update the draft chargeable property with change in value |
 | ```/ated/:atedRefNo/property-details/acquisition/:id``` | POST | update the draft chargeable property with acquisition details |
 | ```/ated/:atedRefNo/property-details/revalued/:id``` | POST | update the draft chargeable property with revalued details ** |
-| ```/ated/:atedRefNo/property-details/owned-before/:id``` | POST | update the draft chargeable property with owned-before details ** | 
+| ```/ated/:atedRefNo/property-details/owned-before/:id``` | POST | update the draft chargeable property with owned-before details | 
 | ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details ** |
-| ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details ** |
+| ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details |
 | ```/ated/:atedRefNo/property-details/full-tax-period/:id``` | POST | update the draft chargeable property for full tax period |  
 | ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details |
 | ```/ated/:atedRefNo/property-details/dates-liable/:id``` | POST | update the draft chargeable property with dates liable |
@@ -193,9 +50,9 @@ where,
 | id | chargeable return id |
 | atedRefNo | unique identfier for clients subscribed to ATED |
 
-### usage with request and response
+### Usage with request and response
 
-####POST /ated/:atedRefNo/property-details/create/:periodKey
+#### POST /ated/:atedRefNo/property-details/create/:periodKey
 
 > create the draft chargeable property
 
@@ -214,6 +71,16 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### GET /ated/:atedRefNo/property-details/retrieve/:id
+
+> retrieve the draft chargeable property
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/address/:id
+
 > update the draft chargeable property with address
 
 **Example request with a valid body**
@@ -231,6 +98,8 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/title/:id
+
 > update the draft chargeable property with title
 
 **Example request with a valid body**
@@ -241,6 +110,32 @@ where,
 **Response body**
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/has-value-change/:id`
+
+> update the draft chargeable property with change in value
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+**Response body**
+
+No body
+
+#### POST /ated/:atedRefNo/property-details/acquisition/:id
+
+> update the draft chargeable property with acquisition details
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+**Response body**
+
+No body
 
 > update the draft chargeable property with tax-avoidance
 
@@ -264,6 +159,8 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/revalued/:id
+
 > update the draft chargeable property with revalued details
 
 ```json
@@ -277,6 +174,8 @@ where,
 **Response body**
 
 [Response With Status Code](#response-with-status-code)
+
+#### POST  /ated/:atedRefNo/property-details/new-build/:id
 
 > update the draft chargeable property with new-build details
 
@@ -308,6 +207,8 @@ where,
 
 [Response With Status Code](#response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/valued/:id
+
 > update the draft chargeable property with valued details
 
 **Example request with a valid body**
@@ -319,6 +220,22 @@ where,
 **Response body**
 
 [Response With Status Code](#response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/full-tax-period/:id
+
+> update the draft chargeable property for full tax period
+
+**Example request with a valid body**
+
+```json
+{
+  "isFullPeriod" : false
+}
+```
+
+**Response body**
+
+No body
 
 ## Client and Agent Registration Details APIs
 
