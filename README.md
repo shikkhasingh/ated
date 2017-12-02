@@ -33,13 +33,23 @@ where,
 ### usage with request and response
 
 > retrieve the draft relief based on period
-```/ated/ATED1223123/ated/reliefs/2017```
+```GET /ated/ATED1223123/ated/reliefs/2017```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
 
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
 
-> saves the draft relief,
+> saves the draft relief
+```POST /ated/ATED1223123/ated/reliefs/save```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
 
 **Example request with a valid body**
 
@@ -88,7 +98,59 @@ where,
 ```
 **Response body**
 
-[Relief Response With Status Code](#relief-response-with-status-code)
+[Relief Response](#relief-response)
+
+> submit the draft return
+```GET /ated/ATED1223123/ated/reliefs/submit/2017```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
+
+**Response body**
+
+```json
+{
+	"processingDate": "2001-12-17T09:30:47Z",
+	"liabilityReturnResponse": [{
+		"mode": "Post",
+		"propertyKey": "aaaaaaaaaa",
+		"liabilityAmount": 1234,
+		"paymentReference": "aaaaaaaaaaaaaa",
+		"formBundleNumber": "012345678912"
+	}]
+}
+```
+
+> delete draft relief
+```DELETE /ated/ATED1223123/ated/reliefs/drafts``` 
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+**Response body**
+
+[Relief Response](#relief-response)
+
+> delete draft relief by year
+```DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+**Response body**
+
+[Relief Response](#relief-response)
+
+
 
 ## Chargeable Return APIs
 
@@ -365,16 +427,7 @@ where,
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
 
-#### Relief Response With Status Code
-
-
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 400   | Bad Request |
-| 404   | Not Found   |
-| 500   | Internal Server Error |
-| 503   | Service Unavailable |
+#### Relief Response
 
 ```json
  [{
@@ -422,13 +475,7 @@ where,
 
 #### Property Details Response With Status Code
 
-| Status | Message     |
-|-------|-------------|
-| 200   | Ok          |
-| 400   | Bad Request |
-| 404   | Not Found   |
-| 500   | Internal Server Error |
-| 503   | Service Unavailable |
+
 
 #### Response With Status Code
 
