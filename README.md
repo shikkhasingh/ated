@@ -162,7 +162,7 @@ where,
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/property-details/create/:periodKey``` | POST | create the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |update the draft chargeable property with in relief details
+| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/address/:id``` | POST | update the draft chargeable property with address  |
 | ```/ated/:atedRefNo/property-details/title/:id``` | POST | update the draft chargeable property with title  |
 | ```/ated/:atedRefNo/property-details/has-value-change/:id``` | POST | update the draft chargeable property with change in value |
@@ -172,7 +172,7 @@ where,
 | ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details  |
 | ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details |
 | ```/ated/:atedRefNo/property-details/full-tax-period/:id``` | POST | update the draft chargeable property for full tax period |  
-| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details | ++
+| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details |
 | ```/ated/:atedRefNo/property-details/dates-liable/:id``` | POST | update the draft chargeable property with dates liable |
 | ```/ated/:atedRefNo/property-details/dates-liable/add/:id``` | POST | add liable dates in the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/dates-in-relief/add/:id``` | POST | add in relief dates in the draft chargeable property |
