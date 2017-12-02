@@ -30,7 +30,7 @@ where,
 | atedRefNo | unique identfier for clients subscribed to ATED |
 
 
-### usage with request and response
+### Usage with request and response
 
 #### GET /ated/ATED1223123/ated/reliefs/2017```
 
@@ -102,7 +102,7 @@ where,
 
 [Relief Response](#relief-response)
 
-####GET /ated/ATED1223123/ated/reliefs/submit/2017```
+#### GET /ated/ATED1223123/ated/reliefs/submit/2017```
 
 > submit the draft return
 
@@ -129,7 +129,7 @@ where,
 }
 ```
 
-####DELETE /ated/ATED1223123/ated/reliefs/drafts```
+#### DELETE /ated/ATED1223123/ated/reliefs/drafts```
  
 > delete draft relief
 
@@ -142,7 +142,7 @@ where,
 
 [Relief Response](#relief-response)
 
-####DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
+#### DELETE /ated/ATED1223123/ated/reliefs/drafts/2017``` 
 
 > delete draft relief by year
 
@@ -155,36 +155,33 @@ where,
 
 [Relief Response](#relief-response)
 
-
-
 ## Chargeable Return APIs
 
-###List of APIs
+### List of APIs
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/property-details/create/:periodKey``` | POST | create the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/address/:id``` | POST | update the draft chargeable property with address ** |
-| ```/ated/:atedRefNo/property-details/title/:id``` | POST | update the draft chargeable property with title ** |
+| ```/ated/:atedRefNo/property-details/retrieve/:id``` | GET | retrieve the draft chargeable property |update the draft chargeable property with in relief details
+| ```/ated/:atedRefNo/property-details/address/:id``` | POST | update the draft chargeable property with address  |
+| ```/ated/:atedRefNo/property-details/title/:id``` | POST | update the draft chargeable property with title  |
 | ```/ated/:atedRefNo/property-details/has-value-change/:id``` | POST | update the draft chargeable property with change in value |
 | ```/ated/:atedRefNo/property-details/acquisition/:id``` | POST | update the draft chargeable property with acquisition details |
-| ```/ated/:atedRefNo/property-details/revalued/:id``` | POST | update the draft chargeable property with revalued details ** |
-| ```/ated/:atedRefNo/property-details/owned-before/:id``` | POST | update the draft chargeable property with owned-before details ** | 
-| ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details ** |
-| ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details ** |
+| ```/ated/:atedRefNo/property-details/revalued/:id``` | POST | update the draft chargeable property with revalued details  |
+| ```/ated/:atedRefNo/property-details/owned-before/:id``` | POST | update the draft chargeable property with owned-before details | 
+| ```/ated/:atedRefNo/property-details/new-build/:id``` | POST | update the draft chargeable property with new-build details  |
+| ```/ated/:atedRefNo/property-details/valued/:id``` | POST | update the draft chargeable property with valued details |
 | ```/ated/:atedRefNo/property-details/full-tax-period/:id``` | POST | update the draft chargeable property for full tax period |  
-| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details |
+| ```/ated/:atedRefNo/property-details/in-relief/:id``` | POST | update the draft chargeable property with in relief details | ++
 | ```/ated/:atedRefNo/property-details/dates-liable/:id``` | POST | update the draft chargeable property with dates liable |
 | ```/ated/:atedRefNo/property-details/dates-liable/add/:id``` | POST | add liable dates in the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/dates-in-relief/add/:id``` | POST | add in relief dates in the draft chargeable property |
 | ```/ated/:atedRefNo/property-details/period/delete/:id``` | POST | delete a period in the draft chargeable property |
-| ```/ated/:atedRefNo/property-details/tax-avoidance/:id``` | POST | update the draft chargeable property with tax-avoidance ** |
-| ```/ated/:atedRefNo/property-details/supporting-info/:id``` | POST | update the draft chargeable property with supporting-info ** |
+| ```/ated/:atedRefNo/property-details/tax-avoidance/:id``` | POST | update the draft chargeable property with tax-avoidance  |
+| ```/ated/:atedRefNo/property-details/supporting-info/:id``` | POST | update the draft chargeable property with supporting-info  |
 | ```/ated/:atedRefNo/property-details/calculate/:id``` | GET | calculate the draft chargeable property for mode = Pre-Calculation |
 | ```/ated/:atedRefNo/property-details/submit/:id``` | POST | submit the draft chargeable property for mode = Post |
 
-** - Example request/response provided below
 
 where,
 
@@ -193,9 +190,9 @@ where,
 | id | chargeable return id |
 | atedRefNo | unique identfier for clients subscribed to ATED |
 
-### usage with request and response
+### Usage with request and response
 
-####POST /ated/:atedRefNo/property-details/create/:periodKey
+#### POST /ated/:atedRefNo/property-details/create/:periodKey
 
 > create the draft chargeable property
 
@@ -214,6 +211,16 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### GET /ated/:atedRefNo/property-details/retrieve/:id
+
+> retrieve the draft chargeable property
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/address/:id
+
 > update the draft chargeable property with address
 
 **Example request with a valid body**
@@ -231,6 +238,8 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/title/:id
+
 > update the draft chargeable property with title
 
 **Example request with a valid body**
@@ -241,6 +250,32 @@ where,
 **Response body**
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/has-value-change/:id`
+
+> update the draft chargeable property with change in value
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+**Response body**
+
+No body
+
+#### POST /ated/:atedRefNo/property-details/acquisition/:id
+
+> update the draft chargeable property with acquisition details
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+**Response body**
+
+No body
 
 > update the draft chargeable property with tax-avoidance
 
@@ -264,6 +299,8 @@ where,
 
 [Property Details Response With Status Code](#property-details-response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/revalued/:id
+
 > update the draft chargeable property with revalued details
 
 ```json
@@ -277,6 +314,8 @@ where,
 **Response body**
 
 [Response With Status Code](#response-with-status-code)
+
+#### POST  /ated/:atedRefNo/property-details/new-build/:id
 
 > update the draft chargeable property with new-build details
 
@@ -296,6 +335,8 @@ where,
 
 [Response With Status Code](#response-with-status-code)
 
+#### POST ated/:atedRefNo/property-details/owned-before/:id 
+
 > update the draft chargeable property with owned-before details
 
 **Example request with a valid body**
@@ -307,6 +348,8 @@ where,
 **Response body**
 
 [Response With Status Code](#response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/valued/:id
 
 > update the draft chargeable property with valued details
 
@@ -320,9 +363,41 @@ where,
 
 [Response With Status Code](#response-with-status-code)
 
+#### POST /ated/:atedRefNo/property-details/full-tax-period/:id
+
+> update the draft chargeable property for full tax period
+
+**Example request with a valid body**
+
+```json
+{
+  "isFullPeriod" : false
+}
+```
+
+**Response body**
+
+No body
+
+#### POST /ated/:atedRefNo/property-details/in-relief/:id
+
+> update the draft chargeable property with in relief details
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:atedRefNo/property-details/dates-liable/:id
+
+> update the draft chargeable property with dates liable
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
 ## Client and Agent Registration Details APIs
 
-APIs for registering clients/agents 
+### APIs for registering clients/agents 
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -338,6 +413,10 @@ where,
 | identifierType | arn or safeId or utr |
 | identifier | the number for the above types |
 | agentCode | agent code |
+
+### Usage with request and response
+
+#### POST /ated/:atedRefNo/registration-details/:safeId
 
 > update ATED client registration details
 
@@ -361,10 +440,28 @@ where,
 ```
 **Response body**
 
-[Response With Status Code](#response-with-status-code)
+[Agent Client Registration Response With Status Code](#gent-client-registration-response-with-status-code)
+
+#### GET /agent/:agentCode/ated/details/:identifier/:identifierType
+
+> retrieve agent registration details
+
+**Response body**
+
+[Agent Client Registration Response With Status Code](#agent-client-registration-response-with-status-code)
+
+#### GET /agent/:agentCode/ated/details/:identifier/:identifierType
+
+> retrieve ATED client registration details
+
+**Response body**
+
+[Agent Client Registration Response With Status Code](#gent-client-registration-response-with-status-code)
 
 
 ## Client and Agent Subscription Details APIs
+
+### APIs for registering clients/agents 
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -373,9 +470,63 @@ where,
 | ```/agent/:agentCode/ated/subscription-data/:atedRefno``` | GET | retrieve subscription data for agent |
 
 
+### Usage with request and response
+
+#### GET /ated/:atedRefNo/subscription-data
+
+> retrieve subscription data for client
+
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
+#### GET /agent/:agentCode/ated/subscription-data/:atedRefno
+
+> retrieve subscription data for agent
+
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
+#### POST /ated/:atedRefNo/subscription-data
+
+> update subscription data for client
+
+**Example request with a valid body**
+
+```json
+{
+  "emailConsent" : true,
+  "changeIndicators" : {
+    "nameChanged" : false,
+    "permanentPlaceOfBusinessChanged" : false,
+    "correspondenceChanged" : false,
+    "contactDetailsChanged" : false
+  },
+  "address" : [ {
+    "addressDetails" : {
+      "addressType" : "Correspondence",
+      "addressLine1" : "line1",
+      "addressLine2" : "line2",
+      "postalCode" : "postCode",
+      "countryCode" : "GB"
+    }
+  } ]
+}
+```
+**Response body**
+
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
 ## Form-bundle return API
 
-APIs for retrieving return based on form-bundle number
+### APIs for retrieving return based on form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -387,18 +538,610 @@ where,
 |------|-------------------|
 | formBundleNumber | return submission identifier from ETMP |
 
-### Summary return APIs
+### Usage with request and response
+
+#### GET /ated/:atedRefNo/returns/form-bundle/:formBundleNumber
+
+> retrieve submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "periodKey": "2015",
+  "propertyDetails": {
+    "titleNumber": "CS72532",
+    "address": {
+      "addressLine1": "1 Whitehall Place",
+      "addressLine2": "Virginia Water",
+      "addressLine3": "Surrey",
+      "postalCode": "GU254DG",
+      "countryCode": "GB"
+    },
+    "additionalDetails": "additional additional"
+  },
+  "dateOfAcquisition": "2011-05-26",
+  "valueAtAcquisition": 727000,
+  "dateOfValuation": "2012-02-09",
+  "taxAvoidanceScheme": "56485952",
+  "taxAvoidancePromoterReference": "56485953",
+  "ninetyDayRuleApplies": true,
+  "professionalValuation": true,
+  "localAuthorityCode": "1234",
+  "dateOfSubmission": "2016-05-10",
+  "liabilityAmount": 9375.12,
+  "paymentReference": "abc456def123gh",
+  "lineItem": [
+    {
+      "propertyValue": 727000,
+      "dateFrom": "2015-04-01",
+      "dateTo": "2016-01-01",
+      "type": "Relief",
+      "reliefDescription": "Property developers"
+    }
+  ]
+}
+```
+
+## Summary return APIs
+
+### APIs for retrieving summary returns
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 | ```/ated/:atedRefNo/returns/partial-summary``` | GET | retrieve partial-summary submitted return details based on form-bundle number |
 | ```/ated/:atedRefNo/returns/full-summary``` | GET | retrieve full-summary submitted return details based on form-bundle number |
 
+### Usage with request and response
+
+#### GET /ated/:atedRefNo/returns/partial-summary
+
+> retrieve partial-summary submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "safeId": "XA0001234567899",
+  "organisationName": "Mark William LLP",
+  "periodData": [
+    {
+      "periodKey": "2016",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789021",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          },
+          {
+            "formBundleNumber": "123456789022",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Property rental businesses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "",
+            "taxAvoidancePromoterReference": ""
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789019",
+                    "dateOfSubmission": "2016-05-01",
+                    "dateFrom": "2016-05-01",
+                    "dateTo": "2017-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789020",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789023",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2015",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789010",
+            "dateOfSubmission": "2013-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2015-04-01",
+            "reliefEndDate": "2016-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789011",
+                    "dateOfSubmission": "2012-01-01",
+                    "dateFrom": "2015-04-01",
+                    "dateTo": "2016-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789012",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789024",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2014",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789013",
+            "dateOfSubmission": "2013-09-25",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2014-04-01",
+            "reliefEndDate": "2015-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Lodge Lane",
+                "addressLine2": "Liverpool",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789014",
+                    "dateOfSubmission": "2013-03-03",
+                    "dateFrom": "2014-04-01",
+                    "dateTo": "2015-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2013",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "Campden House Terrace",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789015",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2014-02-01",
+                    "liabilityAmount": "300.33",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789016",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2014-03-01",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              },
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Montpelier Square",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789017",
+                    "dateOfSubmission": "2012-04-11",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2013-11-22",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789018",
+                    "dateOfSubmission": "2012-10-04",
+                    "dateFrom": "2013-11-23",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "20  ",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "                    ",
+                "addressLine1": " ",
+                "addressLine2": " ",
+                "return": [
+                  {
+                    "formBundleNumber": "075000000164",
+                    "dateOfSubmission": "2017-03-08",
+                    "dateFrom": "2016-04-01",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": 0,
+                    "paymentReference": "XD002610105369",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "atedBalance": "100.50"
+}
+
+```
+#### GET /ated/:atedRefNo/returns/full-summary
+
+> retrieve full-summary submitted return details based on form-bundle number
+
+**Response body**
+```json
+{
+  "safeId": "XA0001234567899",
+  "organisationName": "Mark William LLP",
+  "periodData": [
+    {
+      "periodKey": "2016",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789021",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          },
+          {
+            "formBundleNumber": "123456789022",
+            "dateOfSubmission": "2016-04-04",
+            "relief": "Property rental businesses",
+            "reliefStartDate": "2016-04-01",
+            "reliefEndDate": "2017-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "",
+            "taxAvoidancePromoterReference": ""
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789019",
+                    "dateOfSubmission": "2016-05-01",
+                    "dateFrom": "2016-05-01",
+                    "dateTo": "2017-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789020",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789023",
+                    "dateOfSubmission": "2016-04-01",
+                    "dateFrom": "2017-01-02",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2015",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789010",
+            "dateOfSubmission": "2013-04-04",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2015-04-01",
+            "reliefEndDate": "2016-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Whitehall Place",
+                "addressLine2": "Aberdeen",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789011",
+                    "dateOfSubmission": "2012-01-01",
+                    "dateFrom": "2015-04-01",
+                    "dateTo": "2016-01-01",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789012",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789024",
+                    "dateOfSubmission": "2014-01-01",
+                    "dateFrom": "2016-01-02",
+                    "dateTo": "2016-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2014",
+      "returnData": {
+        "reliefReturnSummary": [
+          {
+            "formBundleNumber": "123456789013",
+            "dateOfSubmission": "2013-09-25",
+            "relief": "Farmhouses",
+            "reliefStartDate": "2014-04-01",
+            "reliefEndDate": "2015-03-31",
+            "arn": "JARN1234567",
+            "taxAvoidanceScheme": "01234567",
+            "taxAvoidancePromoterReference": "01234568"
+          }
+        ],
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Lodge Lane",
+                "addressLine2": "Liverpool",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789014",
+                    "dateOfSubmission": "2013-03-03",
+                    "dateFrom": "2014-04-01",
+                    "dateTo": "2015-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "2013",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "Campden House Terrace",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789015",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2014-02-01",
+                    "liabilityAmount": "300.33",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789016",
+                    "dateOfSubmission": "2012-04-04",
+                    "dateFrom": "2014-03-01",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  }
+                ]
+              },
+              {
+                "contractObject": "12345678901234567890",
+                "titleNumber": "Title number goes here",
+                "addressLine1": "1 Montpelier Square",
+                "addressLine2": "London",
+                "return": [
+                  {
+                    "formBundleNumber": "123456789017",
+                    "dateOfSubmission": "2012-04-11",
+                    "dateFrom": "2013-04-01",
+                    "dateTo": "2013-11-22",
+                    "liabilityAmount": "100.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": true
+                  },
+                  {
+                    "formBundleNumber": "123456789018",
+                    "dateOfSubmission": "2012-10-04",
+                    "dateFrom": "2013-11-23",
+                    "dateTo": "2014-03-31",
+                    "liabilityAmount": "1000.12",
+                    "paymentReference": "reference here",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "periodKey": "20  ",
+      "returnData": {
+        "liabilityReturnSummary": [
+          {
+            "propertySummary": [
+              {
+                "contractObject": "                    ",
+                "addressLine1": " ",
+                "addressLine2": " ",
+                "return": [
+                  {
+                    "formBundleNumber": "075000000164",
+                    "dateOfSubmission": "2017-03-08",
+                    "dateFrom": "2016-04-01",
+                    "dateTo": "2017-03-31",
+                    "liabilityAmount": 0,
+                    "paymentReference": "XD002610105369",
+                    "changeAllowed": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "atedBalance": "100.50"
+}
+
+```
+
+
 ## Edit submitted Chargeable Return APIs
 
 ## Change submitted chargeable return APIs
 
-APIs for changing an already submitted return based on old form-bundle number
+### APIs for changing an already submitted return based on old form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -415,9 +1158,88 @@ where,
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
 
+### Usage with request and response
+
+#### GET /ated/:ated/liability-return/:oldFBNo
+
+> retrieve chargeable return with old form bundle number for change
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### GET /ated/:ated/prev-liability-return/:oldFBNo/:period
+
+> retrive chargeable return with old form bundle number and period
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/update-has-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+ ```
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/update-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+ ```
+
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### GET /ated/:ated/liability-return/calculate/:oldFBNo
+
+> calculate the edited chargeable return
+
+**Response body**
+```json
+{
+  "processingDate" : "2017-12-02T18:45:34Z",
+  "liabilityReturnResponse" : [ ],
+  "accountBalance" : 0
+}
+
+```
+**Response body**
+
+[Property Details Response With Status Code](#property-details-response-with-status-code)
+
+#### POST /ated/:ated/liability-return/:oldFBNo/submit
+
+**Response body with status code**
+```json
+{
+  "processingDate" : "2017-12-02T18:45:34Z",
+  "liabilityReturnResponse" : [ ],
+  "accountBalance" : 0
+}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 500   | Internal Server Error |
+
+
 ## Dispose submitted chargeable return APIs
 
-APIs for disposing an already submitted return based on old form-bundle number
+### APIs for disposing an already submitted return based on old form-bundle number
 
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
@@ -433,6 +1255,340 @@ where,
 | parameters | description |
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
+
+### Usage with request and response
+
+#### GET /ated/:ated/dispose-liability/:oldFBNo
+
+> retrieve chargeable return with old form bundle number for disposal
+
+**Response body with status code**
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"timeStamp": 1512245001345
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-date
+
+> update the chargeable return with date
+
+**Example request with a valid body**
+
+```json
+{
+  "dateOfDisposal" : "2017-09-01",
+  "periodKey" : 1234
+}
+
+```
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"disposeLiability": {
+		"periodKey": 2015
+	},
+	"timeStamp": 1512245212621
+}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-has-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245478849
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-bank
+
+> update the chargeable return with has bank details
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245850965
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### GET /ated/:ated/dispose-liability/:oldFBNo/calculate
+
+> calculate the edited chargeable return
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245850965
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/submit
+
+> dispose the edited chargeable return
+
+**Response body with status code**
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"timeStamp": 1512245001345
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
 
 #### Relief Response
 
@@ -482,7 +1638,104 @@ where,
 
 #### Property Details Response With Status Code
 
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
 
+```json
+{
+  "atedRefNo" : "ated-ref-123",
+  "id" : "123456789012",
+  "periodKey" : 2015,
+  "addressProperty" : {
+    "line_1" : "addr1",
+    "line_2" : "addr2",
+    "line_3" : "addr3",
+    "line_4" : "addr4"
+  },
+  "title" : {
+    "titleNumber" : "titleNo"
+  },
+  "value" : {
+    "anAcquisition" : true,
+    "isPropertyRevalued" : true,
+    "revaluedValue" : 1111.11,
+    "revaluedDate" : "1970-01-01",
+    "isOwnedBefore2012" : true,
+    "ownedBefore2012Value" : 1111.11,
+    "isNewBuild" : true,
+    "newBuildValue" : 1111.11,
+    "newBuildDate" : "1970-01-01",
+    "notNewBuildValue" : 1111.11,
+    "notNewBuildDate" : "1970-01-01",
+    "isValuedByAgent" : true
+  },
+  "period" : {
+    "isFullPeriod" : false,
+    "isTaxAvoidance" : true,
+    "taxAvoidanceScheme" : "taxAvoidanceScheme",
+    "taxAvoidancePromoterReference" : "taxAvoidancePromoterReference",
+    "supportingInfo" : "supportingInfo",
+    "isInRelief" : true,
+    "liabilityPeriods" : [ {
+      "lineItemType" : "Liability",
+      "startDate" : "2015-04-01",
+      "endDate" : "2015-08-31"
+    } ],
+    "reliefPeriods" : [ {
+      "lineItemType" : "Relief",
+      "startDate" : "2015-09-01",
+      "endDate" : "2016-03-31",
+      "description" : "Relief"
+    } ]
+  },
+  "calculated" : {
+    "valuationDateToUse" : "1970-01-01",
+    "professionalValuation" : true,
+    "liabilityPeriods" : [ {
+      "value" : 1111.11,
+      "startDate" : "2015-04-01",
+      "endDate" : "2015-08-31",
+      "lineItemType" : "Liability"
+    } ],
+    "reliefPeriods" : [ {
+      "value" : 1111.11,
+      "startDate" : "2015-09-01",
+      "endDate" : "2016-03-31",
+      "lineItemType" : "Relief",
+      "description" : "Relief"
+    } ],
+    "timeStamp" : 1512238927440
+  },
+  "timeStamp" : {
+    "$date" : 1512238927440
+  }
+}
+
+```
+
+#### Agent Client Registration Response With Status Code
+
+For agents,
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909", "agentReferenceNumber": "AARN1234567"}
+```
+
+For clients,
+```json
+{"sapNumber":"1234567890", "safeId": "EX0012345678909"}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 400   | Bad Request |
+| 404   | Not Found   |
+| 500   | Internal Server Error |
+| 503   | Service Unavailable |
 
 #### Response With Status Code
 
