@@ -95,7 +95,6 @@ class DisposeLiabilityReturnControllerSpec extends PlaySpec with OneServerPerSui
       }
     }
 
-
     "updateHasBankDetails" must {
       "for successful save, return DisposeLiabilityReturn model with OK as response status" in {
         lazy val formBundleResp = ChangeLiabilityReturnBuilder.generateFormBundleResponse(periodKey)

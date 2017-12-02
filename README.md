@@ -1081,6 +1081,340 @@ where,
 |------|-------------------|
 | oldFBNo | last return submission identifier (from ETMP) |
 
+### Usage with request and response
+
+#### GET /ated/:ated/dispose-liability/:oldFBNo
+
+> retrieve chargeable return with old form bundle number for disposal
+
+**Response body with status code**
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"timeStamp": 1512245001345
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-date
+
+> update the chargeable return with date
+
+**Example request with a valid body**
+
+```json
+{
+  "dateOfDisposal" : "2017-09-01",
+  "periodKey" : 1234
+}
+
+```
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"disposeLiability": {
+		"periodKey": 2015
+	},
+	"timeStamp": 1512245212621
+}
+```
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-has-bank
+
+> update the chargeable return with has bank indicator
+
+**Example request with a valid body**
+
+```json
+ Boolean
+```
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245478849
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/update-bank
+
+> update the chargeable return with has bank details
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245850965
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### GET /ated/:ated/dispose-liability/:oldFBNo/calculate
+
+> calculate the edited chargeable return
+
+**Response body with status code**
+
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"bankDetails": {
+		"hasBankDetails": true,
+		"bankDetails": {}
+	},
+	"timeStamp": 1512245850965
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+#### POST /ated/:ated/dispose-liability/:oldFBNo/submit
+
+> dispose the edited chargeable return
+
+**Response body with status code**
+```json
+{
+	"atedRefNo": "ated-123",
+	"id": "123456789012",
+	"formBundleReturn": {
+		"periodKey": "2015",
+		"propertyDetails": {
+			"titleNumber": "12345678",
+			"address": {
+				"addressLine1": "line1",
+				"addressLine2": "line2",
+				"countryCode": "GB"
+			},
+			"additionalDetails": "supportingInfo"
+		},
+		"dateOfValuation": "2015-05-05",
+		"professionalValuation": true,
+		"taxAvoidanceScheme": "taxAvoidanceScheme",
+		"ninetyDayRuleApplies": true,
+		"dateOfSubmission": "2015-05-05",
+		"liabilityAmount": 123.23,
+		"paymentReference": "payment-ref-123",
+		"lineItem": [{
+			"propertyValue": 5000000,
+			"dateFrom": "2015-04-01",
+			"dateTo": "2015-08-31",
+			"type": "Liability"
+		}, {
+			"propertyValue": 5000000,
+			"dateFrom": "2015-09-01",
+			"dateTo": "2016-03-31",
+			"type": "Relief",
+			"reliefDescription": "Relief"
+		}]
+	},
+	"timeStamp": 1512245001345
+}
+```
+
+| Status | Message     |
+|-------|-------------|
+| 200   | Ok          |
+| 404   | Not Found   |
+
+
+
 #### Relief Response
 
 ```json
