@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class PropertyDetailsMongoRepositorySpec extends PlaySpec
   lazy val propertyDetails2 = PropertyDetailsBuilder.getPropertyDetails("2")
   lazy val propertyDetails3 = PropertyDetailsBuilder.getPropertyDetails("3")
 
-  "PropertyDetailsMongoRepository" should {/*
+  "PropertyDetailsMongoRepository" should {
 
     "Save stuff in mongo" should {
 
@@ -131,5 +131,5 @@ class PropertyDetailsMongoRepositorySpec extends PlaySpec
       await(repository.fetchPropertyDetails("ated-ref-1")).isEmpty must be(true)
     }
 
-  */}
+  }
 }

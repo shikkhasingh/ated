@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,8 +64,6 @@ object ReliefsMongoRepository extends MongoDbConnection {
 class ReliefsReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[ReliefsTaxAvoidance, BSONObjectID]("reliefs", mongo, ReliefsTaxAvoidance.formats, ReactiveMongoFormats.objectIdFormats)
     with ReliefsMongoRepository {
-
-  collection.drop(failIfNotFound = true)
 
   val metrics: Metrics = Metrics
 
