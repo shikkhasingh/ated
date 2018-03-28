@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,8 +72,6 @@ object PropertyDetailsMongoRepository extends MongoDbConnection {
 class PropertyDetailsReactiveMongoRepository(implicit mongo: () => DB)
   extends ReactiveRepository[PropertyDetails, BSONObjectID]("propertyDetails", mongo, PropertyDetails.formats, ReactiveMongoFormats.objectIdFormats)
     with PropertyDetailsMongoRepository {
-
-  collection.drop(failIfNotFound = true)
 
   val metrics: Metrics = Metrics
 

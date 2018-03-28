@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
 
   def repository(implicit mongo: () => DB) = new DisposeLiabilityReturnReactiveMongoRepository()
 
-  "DisposeLiabilityReturnRepository" must {/*
+  "DisposeLiabilityReturnRepository" must {
 
     lazy val formBundle1 = ChangeLiabilityReturnBuilder.generateFormBundleResponse(2015)
     lazy val formBundle2 = ChangeLiabilityReturnBuilder.generateFormBundleResponse(2015)
@@ -88,6 +88,6 @@ class DisposeLiabilityReturnMongoRepositorySpec extends PlaySpec
       }
     }
 
-  */}
+  }
 
 }
