@@ -16,15 +16,10 @@
 
 package controllers
 
-import audit.Auditable
-import config.MicroserviceAuditConnector
-import models._
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.Action
-import services.{ChangeLiabilityService, PropertyDetailsService}
-import uk.gov.hmrc.play.audit.model.{Audit, EventTypes}
-import uk.gov.hmrc.play.config.AppName
+import services.ChangeLiabilityService
 import uk.gov.hmrc.play.microservice.controller.BaseController
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -74,10 +69,8 @@ trait ChangeLiabilityReturnController extends BaseController {
       }
     }
   }
-
 }
 
 object ChangeLiabilityReturnController extends ChangeLiabilityReturnController {
   override val changeLiabilityService = ChangeLiabilityService
-
 }

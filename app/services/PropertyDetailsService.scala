@@ -77,7 +77,6 @@ trait PropertyDetailsService extends PropertyDetailsBaseService with ReliefConst
     cacheDraftPropertyDetails(atedRefNo, updatePropertyDetails)
   }
 
-
   def calculateDraftPropertyDetails(atedRefNo: String, id: String)
                                    (implicit hc: HeaderCarrier): Future[Option[PropertyDetails]] = {
 

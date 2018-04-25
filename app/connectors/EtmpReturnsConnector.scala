@@ -57,6 +57,7 @@ trait EtmpReturnsConnector extends ServicesConfig with RawResponseReads with Aud
 
     val jsonData = Json.toJson(submitReturns)
     val timerContext = metrics.startTimer(MetricsEnum.EtmpSubmitReturns)
+
     http.POST(postUrl, jsonData).map { response =>
       timerContext.stop()
       auditSubmitReturns(atedReferenceNo, submitReturns, response)
@@ -165,7 +166,7 @@ trait EtmpReturnsConnector extends ServicesConfig with RawResponseReads with Aud
           case Some(reliefReturns) => reliefReturns.map(x => x.reliefDescription).mkString(";")
           case None => ""
         }}",
-        "returns" -> s"$returns",
+        "returns" -> s"${Json.toJson(returns)}",
         "responseStatus" -> s"${response.status}",
         "responseBody" -> s"${response.body}",
         "status" -> s"${eventType}"))
