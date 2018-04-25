@@ -38,8 +38,8 @@ trait ChangeLiabilityService extends PropertyDetailsBaseService with ReliefConst
       cachedData <- retrieveDraftPropertyDetail(atedRefNo, oldFormBundleNo)
       cachedChangeLiability <- {
         cachedData match {
-          case Some(x) => Future.successful(Option(x))
-          case None =>
+          case Some(x) if fromSelectedPrevReturn.isEmpty | fromSelectedPrevReturn.contains(false) => Future.successful(Option(x))
+          case _ =>
             etmpConnector.getFormBundleReturns(atedRefNo, oldFormBundleNo.toString) map {
               response => response.status match {
                 case OK =>
