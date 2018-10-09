@@ -1,7 +1,6 @@
 import sbt._
 
 object MicroServiceBuild extends Build with MicroService {
-  import scala.util.Properties.envOrElse
   val appName = "ated"
 
   override lazy val appDependencies: Seq[ModuleID] = AppDependencies()
@@ -12,8 +11,8 @@ private object AppDependencies {
   import play.sbt.PlayImport._
   import play.core.PlayVersion
 
-  private val microserviceBootstrapVersion = "6.18.0"
-  private val domainVersion = "4.1.0"
+  private val microserviceBootstrapVersion = "8.3.0"
+  private val domainVersion = "5.2.0"
   private val scalaTestVersion = "2.2.6"
   private val pegdownVersion = "1.6.0"
   private val scalaTestPlusVersion = "1.5.1"
@@ -49,19 +48,6 @@ private object AppDependencies {
     }.test
   }
 
-  object IntegrationTest {
-    def apply() = new TestDependencies {
-
-      override lazy val scope: String = "it"
-
-      override lazy val test = Seq(
-        "org.scalatest" %% "scalatest" % scalaTestVersion % scope,
-        "org.pegdown" % "pegdown" % pegdownVersion % scope,
-        "com.typesafe.play" %% "play-test" % PlayVersion.current % scope
-      )
-    }.test
-  }
-
-  def apply() = compile ++ Test() ++ IntegrationTest()
+  def apply() = compile ++ Test()
 }
 
