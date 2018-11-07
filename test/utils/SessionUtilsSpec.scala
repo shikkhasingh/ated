@@ -24,6 +24,13 @@ class SessionUtilsSpec extends PlaySpec {
     "getUniqueAckNo return 32 char long ack no" in {
       SessionUtils.getUniqueAckNo.length must be(32)
       SessionUtils.getUniqueAckNo.length must be(32)
+
+    }
+
+    "getUniqueAckNo" must {
+      "generate ref number that passes regex validation" in {
+        SessionUtils.getUniqueAckNo.matches(SessionUtils.ackRefNumRegex) must be(true)
+      }
     }
   }
 

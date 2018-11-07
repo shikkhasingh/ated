@@ -20,6 +20,8 @@ import org.apache.commons.lang3.RandomStringUtils
 
 object SessionUtils {
 
+  val ackRefNumRegex ="^[A-Za-z0-9 -]{1,32}$"
+
   def getUniqueAckNo: String = {
     val length = 32
     val nanoTime = System.nanoTime()
