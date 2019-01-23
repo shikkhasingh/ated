@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 HM Revenue & Customs
+ * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@ case class PropertyDetailsAddress(line_1: String, line_2: String, line_3: Option
                                   postcode: Option[String] = None) {
   override def toString = {
 
-    val line3display = line_3.map(line3 => s", $line3, " ).fold("")(x=>x)
-    val line4display = line_4.map(line4 => s"$line4, " ).fold("")(x=>x)
-    val postcodeDisplay = postcode.map(postcode1 => s"$postcode1").fold("")(x=>x)
+    val line3display = line_3.map(line3 => s", $line3, ").fold("")(x => x)
+    val line4display = line_4.map(line4 => s"$line4, ").fold("")(x => x)
+    val postcodeDisplay = postcode.map(postcode1 => s"$postcode1").fold("")(x => x)
     s"$line_1, $line_2 $line3display$line4display$postcodeDisplay"
   }
 }
@@ -43,28 +43,28 @@ object PropertyDetailsTitle {
 }
 
 
-case class PropertyDetailsValue( anAcquisition: Option[Boolean] = None,
-                                 isPropertyRevalued: Option[Boolean] = None,
-                                 revaluedValue: Option[BigDecimal] = None,
-                                 revaluedDate: Option[LocalDate] = None,
-                                 partAcqDispDate: Option[LocalDate] = None,
-                                 isOwnedBefore2012: Option[Boolean] = None,
-                                 ownedBefore2012Value: Option[BigDecimal] = None,
-                                 isNewBuild: Option[Boolean] = None,
-                                 newBuildValue: Option[BigDecimal] = None,
-                                 newBuildDate: Option[LocalDate] = None,
-                                 localAuthRegDate: Option[LocalDate] = None,
-                                 notNewBuildValue: Option[BigDecimal] = None,
-                                 notNewBuildDate: Option[LocalDate] = None,
-                                 isValuedByAgent: Option[Boolean] = None,
-                                 hasValueChanged: Option[Boolean] = None
+case class PropertyDetailsValue(anAcquisition: Option[Boolean] = None,
+                                isPropertyRevalued: Option[Boolean] = None,
+                                revaluedValue: Option[BigDecimal] = None,
+                                revaluedDate: Option[LocalDate] = None,
+                                partAcqDispDate: Option[LocalDate] = None,
+                                isOwnedBeforePolicyYear: Option[Boolean] = None,
+                                ownedBeforePolicyYearValue: Option[BigDecimal] = None,
+                                isNewBuild: Option[Boolean] = None,
+                                newBuildValue: Option[BigDecimal] = None,
+                                newBuildDate: Option[LocalDate] = None,
+                                localAuthRegDate: Option[LocalDate] = None,
+                                notNewBuildValue: Option[BigDecimal] = None,
+                                notNewBuildDate: Option[LocalDate] = None,
+                                isValuedByAgent: Option[Boolean] = None,
+                                hasValueChanged: Option[Boolean] = None
                                )
 
 object PropertyDetailsValue {
   implicit val formats = Json.format[PropertyDetailsValue]
 }
 
-case class PropertyDetailsAcquisition( anAcquisition: Option[Boolean] = None)
+case class PropertyDetailsAcquisition(anAcquisition: Option[Boolean] = None)
 
 object PropertyDetailsAcquisition {
   implicit val formats = Json.format[PropertyDetailsAcquisition]
@@ -85,8 +85,26 @@ object PropertyDetailsRevalued {
   implicit val formats = Json.format[PropertyDetailsRevalued]
 }
 
-case class PropertyDetailsOwnedBefore(isOwnedBefore2012: Option[Boolean] = None,
-                                      ownedBefore2012Value: Option[BigDecimal] = None)
+sealed trait OwnedBeforePolicyYear
+
+case object IsOwnedBefore2012 extends OwnedBeforePolicyYear
+
+case object IsOwnedBefore2017 extends OwnedBeforePolicyYear
+
+case object NotOwnedBeforePolicyYear extends OwnedBeforePolicyYear
+
+case class PropertyDetailsOwnedBefore(isOwnedBeforePolicyYear: Option[Boolean] = None,
+                                      ownedBeforePolicyYearValue: Option[BigDecimal] = None) {
+
+  def policyYear(periodKey: Int) = isOwnedBeforePolicyYear match {
+    case Some(true) => periodKey match {
+      case p if p >= 2018 => IsOwnedBefore2017
+      case p if p >= 2013 && p < 2018 => IsOwnedBefore2012
+      case _ => throw new RuntimeException("Invalid liability period")
+    }
+    case _ => NotOwnedBeforePolicyYear
+  }
+}
 
 object PropertyDetailsOwnedBefore {
   implicit val formats = Json.format[PropertyDetailsOwnedBefore]
@@ -190,7 +208,7 @@ object PropertyDetailsPeriod {
   implicit val formats = Json.format[PropertyDetailsPeriod]
 }
 
-case class CalculatedPeriod(value : BigDecimal,
+case class CalculatedPeriod(value: BigDecimal,
                             startDate: LocalDate,
                             endDate: LocalDate,
                             lineItemType: String,
@@ -202,8 +220,8 @@ object CalculatedPeriod {
 }
 
 case class PropertyDetailsCalculated(valuationDateToUse: Option[LocalDate] = None,
-                                     acquistionValueToUse : Option[BigDecimal] = None,
-                                     acquistionDateToUse : Option[LocalDate] = None,
+                                     acquistionValueToUse: Option[BigDecimal] = None,
+                                     acquistionDateToUse: Option[LocalDate] = None,
                                      professionalValuation: Option[Boolean] = Some(false),
                                      liabilityPeriods: Seq[CalculatedPeriod] = Nil,
                                      reliefPeriods: Seq[CalculatedPeriod] = Nil,
@@ -220,10 +238,10 @@ case class PropertyDetails(atedRefNo: String,
                            periodKey: Int,
                            addressProperty: PropertyDetailsAddress,
                            title: Option[PropertyDetailsTitle] = None,
-                           value : Option[PropertyDetailsValue] = None,
-                           period : Option[PropertyDetailsPeriod] = None,
-                           calculated : Option[PropertyDetailsCalculated] = None,
-                           formBundleReturn : Option[FormBundleReturn] = None,
+                           value: Option[PropertyDetailsValue] = None,
+                           period: Option[PropertyDetailsPeriod] = None,
+                           calculated: Option[PropertyDetailsCalculated] = None,
+                           formBundleReturn: Option[FormBundleReturn] = None,
                            bankDetails: Option[BankDetailsModel] = None,
                            timeStamp: DateTime = DateTime.now(DateTimeZone.UTC))
 
