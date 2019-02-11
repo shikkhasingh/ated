@@ -358,7 +358,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
 
   "getAcquistionData" must {
     "return (None, None) if we have no data" in {
-      val result = PropertyDetailsUtils.getAcquisitionData(None)
+      val result = PropertyDetailsUtils.getAcquisitionData(None,periodKey)
       result._1.isDefined must be (false)
       result._2.isDefined must be (false)
     }
@@ -366,7 +366,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
 
   "getInitialValueForSubmission" must {
     "return (None, None) if we have no data" in {
-      val result = PropertyDetailsUtils.getInitialValueForSubmission(None)
+      val result = PropertyDetailsUtils.getInitialValueForSubmission(None,periodKey)
       result.isDefined must be (false)
     }
   }
@@ -572,11 +572,11 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
 
   "getInitialValueForSubmission" must {
     "return None if we have no value object " in {
-      PropertyDetailsUtils.getInitialValueForSubmission(None).isDefined must be (false)
+      PropertyDetailsUtils.getInitialValueForSubmission(None,periodKey).isDefined must be (false)
     }
 
     "return None we have a value object that isn't populated " in {
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(PropertyDetailsValue())).isDefined must be (false)
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(PropertyDetailsValue()),periodKey).isDefined must be (false)
     }
 
     "return the revalued value if this has been revalued but we has no build or ownedBefore answers " in {
@@ -584,7 +584,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         isPropertyRevalued = Some(true),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal)) must be (Some(BigDecimal(1111.11)))
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal),periodKey) must be (Some(BigDecimal(1111.11)))
     }
 
     "return the revalued value if this has been not benn revalued and we have no build or ownedBefore answers " in {
@@ -592,7 +592,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         isPropertyRevalued = Some(false),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal)) must be (Some(BigDecimal(1111.11)))
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal),periodKey) must be (Some(BigDecimal(1111.11)))
     }
 
 
@@ -605,7 +605,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         isPropertyRevalued = Some(true),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal)) must be (Some(BigDecimal(2222.22)))
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal),periodKey) must be (Some(BigDecimal(2222.22)))
     }
 
     "return the new build value, even if it's been revalued" in {
@@ -617,7 +617,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         isPropertyRevalued = Some(true),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal)) must be (Some(BigDecimal(3333.33)))
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal),periodKey) must be (Some(BigDecimal(3333.33)))
     }
 
     "return the not new build value, even if it's been revalued" in {
@@ -629,19 +629,19 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         isPropertyRevalued = Some(true),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal)) must be (Some(BigDecimal(4444.44)))
+      PropertyDetailsUtils.getInitialValueForSubmission(Some(propVal),periodKey) must be (Some(BigDecimal(4444.44)))
     }
   }
 
   "getAcquistionData" must {
     "return None if we have no value object " in {
-      val res = PropertyDetailsUtils.getAcquisitionData(None)
+      val res = PropertyDetailsUtils.getAcquisitionData(None,periodKey)
       res._1.isDefined must be (false)
       res._2.isDefined must be (false)
     }
 
     "return None we have a value object that isn't populated " in {
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(PropertyDetailsValue()))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(PropertyDetailsValue()),periodKey)
       res._1.isDefined must be (false)
       res._2.isDefined must be (false)
     }
@@ -653,7 +653,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         partAcqDispDate = Some(new LocalDate("2013-02-02")),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal),periodKey)
       res._1 must be (Some(BigDecimal(1111.11)))
       res._2 must be (Some(new LocalDate("2013-02-02")))
     }
@@ -671,7 +671,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         partAcqDispDate = Some(new LocalDate("2013-02-02")),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal),periodKey)
       res._1 must be (Some(BigDecimal(2222.22)))
       res._2 must be (Some(new LocalDate("2012-04-01")))
     }
@@ -690,7 +690,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         partAcqDispDate = Some(new LocalDate("2013-02-02")),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal),periodKey)
       res._1 must be (Some(BigDecimal(3333.33)))
       res._2 must be (Some(new LocalDate("2014-01-01")))
     }
@@ -708,7 +708,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         partAcqDispDate = Some(new LocalDate("2013-02-02")),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal),periodKey)
       res._1 must be (Some(BigDecimal(4444.44)))
       res._2 must be (Some(new LocalDate("2015-01-01")))
     }
@@ -726,7 +726,7 @@ class PropertyDetailsUtilsSpec extends PlaySpec with ReliefConstants with OneSer
         partAcqDispDate = Some(new LocalDate("2013-02-02")),
         revaluedValue = Some(BigDecimal(1111.11)))
 
-      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal))
+      val res = PropertyDetailsUtils.getAcquisitionData(Some(propVal),periodKey)
       res._1 must be (Some(BigDecimal(1111.11)))
       res._2 must be (Some(new LocalDate("2013-02-02")))
     }
