@@ -251,6 +251,15 @@ class ChangeLiabilityUtilsSpec extends PlaySpec with OneServerPerSuite {
         result1.valuationDateToUse must be(Some(new LocalDate("2012-04-01")))
       }
 
+      "return (Some(valuationDate),Some(valueToUse)), due to getValueAndDate - anAcquisition = false & isOwnedBeforePolicyYear2017 = true" in {
+        val cL1 = ChangeLiabilityReturnBuilder.generateChangeLiabilityReturn(2019, "123456789012")
+        val value1 = ChangeLiabilityReturnBuilder.generateLiabilityValueDetails(periodKey = 2019)
+        val v2 = value1.copy(hasValueChanged = Some(true), anAcquisition = Some(false), isOwnedBeforePolicyYear = Some(true), ownedBeforePolicyYearValue = Some(BigDecimal(1500000)))
+        val cL2 = cL1.copy(value = Some(v2))
+        val result1 = ChangeLiabilityUtils.changeLiabilityCalculated(cL2, None)
+        result1.valuationDateToUse must be(Some(new LocalDate("2017-04-01")))
+      }
+
       "return (Some(valuationDate),Some(valueToUse)), due to getValueAndDate - anAcquisition = false & isOwnedBefore2012 = false, isNewBuild = true" in {
         val cL1 = ChangeLiabilityReturnBuilder.generateChangeLiabilityReturn(2015, "123456789012")
         val value1 = ChangeLiabilityReturnBuilder.generateLiabilityValueDetails(periodKey = 2015)
